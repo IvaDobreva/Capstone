@@ -1,0 +1,21 @@
+/* game-screen style */
+
+/* 일단 이미지보드의 크기는 8em으로 설정. 차후에 다시 수정. */
+#game-screen .image-board {
+  position : relative;
+  width : 150;
+  height : 150;
+  text-align: center;
+}
+
+/* proto공간을 미소 크기로 설정해서, image-size 클래스가 이미지의 실제 크기를 결정하게 되었다. */
+.image-size {
+  font-size : 40px;
+}
+
+#image-proto {
+  position : absolute;
+  width : 1em;
+  height : 1em;
+  left : -1000px;
+}

@@ -7,6 +7,10 @@ const wrapper = require('../model/wrapper');
 const imageModel = require('../model/image');
 const vocModel = require('../model/vocabulary');
 
+router.get('/', (req, res) => {
+  res.render('game');
+});
+
 router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
   const rows = await imageModel.getTotalRows();
   const randImg = await imageModel.getRandImg(rows[0]['COUNT(*)']);

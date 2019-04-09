@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Bird Korea</title>
+    <link rel='stylesheet' href='/stylesheets/fontfaces.css'>
+
+    <script src="scripts/modernizr.js"></script>
+    <script src="scripts/loader.js"></script>
+
+    <link rel='stylesheet' href='/stylesheets/main.css'>
+    <link rel='stylesheet' href='/stylesheets/splash-screen.css'>
+    <link rel='stylesheet' href='/stylesheets/main-menu.css'>
+    <link rel='stylesheet' href='/stylesheets/game-screen.css'>
+  </head>
+
+  <body>
+    <!--include ejs file like this.-->
+    <header>
+      <% include templates/header.ejs %>
+    </header>
+
+    <!-- 현재 어째서 splash-screen 만 표현이 되고 있을까요?? -->
+    <div id="game">
+
+
+      <div class='background'></div>
+
+      <!-- 스플래시 화면 html -->
+      <div class="screen" id="splash-screen">
+        <h1 class="logo1">Bird</h1>
+        <h1 class="logo2">Korea</h1>
+        <span>계속하려면 클릭하세요.</span>
+      </div>
+
+      <!-- 메인메뉴 화면 html -->
+      <div class="screen" id="main-menu">
+        <h1 class="logo1">Bird</h1>
+        <h1 class="logo2">Korea</h1>
+        <ul class="menu">
+          <li><button name="game-screen">START</button></li>
+          <li><button name="score-screen">SCORE</button></li>
+          <li><button name="about-screen">SETTING</button></li>
+          <li><button name="exit-screen">EXIT</button></li>
+        </ul>
+      </div>
+
+      <!-- 게임 화면 -->
+      <div class="screen" id="game-screen">
+        <div class="image-board">
+          <h2>What does this image mean?</h2>
+          <img id="source"
+               src="https://mdn.mozillademos.org/files/5397/rhino.jpg"
+               width="300">
+        </div>
+        <div>
+          <input onchange="" />
+          <button class="answer" onclick ="" name="next">NEXT</button>
+        </div>
+      </div>
+
+      <div class="screen" id="high-scores">game</div>
+
+      <!-- ID가 지정되어 있으므로, CSS와 javascript를 연결가능-->
+      <div id="image-proto" class="image-size"></div>
+    </div>
+
+  </body>
+
+</html>

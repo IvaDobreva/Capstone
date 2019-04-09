@@ -1,0 +1,11 @@
+/* splash-screen style */
+
+#splash-screen {
+  text-align: center;
+  padding-top: 10px;
+}
+
+#splash-screen .continue {
+  cursor: pointer,
+  font-size: 30px;
+}

@@ -1,0 +1,40 @@
+/* main-menu screen style */
+
+#main-menu {
+  padding-top: 1em;
+}
+
+ul.menu {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+ul.menu li {
+  margin: 0.8em 0;
+}
+
+ul.menu li button {
+  font-family: Slackey, sans-serif;
+  font-size: 20px;
+  color: rgb(200, 200, 200);
+  width: 200px;
+  height: 1.5em;
+  background: rgb(50, 10, 10);
+  border: 0.1em solid rgb(200, 200, 200);
+  border-radius: 0.5em;
+  -webkit-box-shadow: 0.2em 0.2em 0.3em rgb(0, 0, 0);
+  -moz-box-shadow: 0.2em 0.2em 0.3em rgb(0, 0, 0);
+  box-shadow: 0.2em 0.2em 0.3em rgb(0, 0, 0);
+}
+
+
+ul.menu li button:hover {
+  background: rgb(10, 10, 50);
+}
+
+ul.menu li button:active {
+  color: rgb(255, 255, 0);
+  background: rgb(30, 40, 0);
+}

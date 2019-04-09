@@ -11,7 +11,7 @@ const userModel = require('../model/user');
 
 router.get('/login', (req, res) => {
   //load login page
-  res.render('index');
+  res.render('login');
 });
 
 router.get('/myPage', wrapper.asyncMiddleware(async(req, res) => {
@@ -38,9 +38,14 @@ router.post('/login', wrapper.asyncMiddleware(async(req, res) => {
   res.send("res");
 }));
 
+//Sing up page
+router.get('/signup', (req, res) => {
+  res.render('signup');
+})
+
 //REgister a new user
 //Do validation checks at front end
-router.post('/newUser', wrapper.asyncMiddleware(async(req,res) => {
+router.post('/register', wrapper.asyncMiddleware(async(req,res) => {
   const un = req.body.username;
   const isExisting = await userModel.checkIfExisting(un);
   if(isExisting.length == 0 ) {
