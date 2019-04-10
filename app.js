@@ -16,7 +16,7 @@ const PORT = config.port;
 
 app.use(cors());
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.set('view engine', 'ejs')

@@ -2,13 +2,15 @@
 
 const express = require('express');
 const router = express.Router();
+const cookies = require('cookie');
 
 const wrapper = require('../model/wrapper');
 const imageModel = require('../model/image');
 const vocModel = require('../model/vocabulary');
 
 router.get('/', (req, res) => {
-  res.render('game');
+  console.log(cookies.parse(req.headers.cookie)['token']);
+  res.render('game', {cookie: ""});
 });
 
 router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {

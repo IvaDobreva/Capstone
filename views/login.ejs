@@ -9,7 +9,6 @@
      function register() {
          location.href="/register";
      }
-
     </script>
 </head>
 
@@ -21,14 +20,14 @@
 
   <div id="login_frame">
       <p><h1>log in</h1></p>
-      <form method="post" action="/login">
+      <form  method="post" action="/login">
           <p>
               <label class="label_log">user</label>
-              <input type="text" id="username" class="text_field" />
+              <input type="text" id="username" name="username" class="text_field" />
           </p>
           <p>
               <label class="label_log">pw</label>
-              <input type="text" id="pass" class="text_field" />
+              <input type="text" id="pass" name="pass" class="text_field" />
           </p>
       <div id="login_control">
           <input type="submit" id="btn_login" value="log in">

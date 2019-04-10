@@ -1,0 +1,93 @@
+body{
+    background-image: url("/images/back.jpg");
+    -webkit-background-size: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+
+#register_frame{
+    width: 400px;
+    height: 360px;
+    padding: 13px;
+    position: relative;
+    left: 50%;
+    top: 300px;
+    margin-left: -200px;
+    margin-top: -200px;
+    background-color: rgba(240, 255, 255, 0.5);
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+form p> *{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+h1{
+    margin-top: 22px;
+}
+
+.label_register{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+    width: 105px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: white;
+    background-color: dodgerblue;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.text_register{
+    width: 278px;
+    height: 28px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 0;
+}
+
+#wt_register{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: antiquewhite;
+    background-color: dodgerblue;
+    border-radius: 6px;
+    border: 0;
+
+    float: left;
+}
+#cancel{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: antiquewhite;
+    background-color: dodgerblue;
+    border-radius: 6px;
+    border: 0;
+
+    float: left;
+}
+
+
+
+#register_control{
+    padding: 0 58px;
+}
+#register_control p{
+   vertical-align: center;
+}

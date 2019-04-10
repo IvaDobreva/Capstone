@@ -8,15 +8,22 @@ const cGen = require('../payload-gen');
 
 const wrapper = require('../model/wrapper');
 const userModel = require('../model/user');
+const session = require('../model/sessions');
 
-router.get('/login', (req, res) => {
-  //load login page
+router.get('/login', wrapper.asyncMiddleware(async(req, res) => {
   res.render('login');
-});
+}));
 
 router.get('/myPage', wrapper.asyncMiddleware(async(req, res) => {
   const token = cookies.parse(req.headers.cookie)['token'];
-  res.end();
+  const user = await session.checkSession(token);
+
+  if(user.length == 0 ) {
+  //  res.set({session: false});
+    res.render('index');
+  }
+  //res.set({session: true});
+  res.render('index', {session: true });
 }));
 
 //Login
@@ -32,29 +39,37 @@ router.post('/login', wrapper.asyncMiddleware(async(req, res) => {
   }
 
   const token = cGen.sign(uname, upass);
+
+  //create session log in db
+  await session.createSession(uname, token);
+
   res.cookie('token', token);
 
   //redirect to my page or index page
-  res.send("res");
+  res.redirect('myPage');
 }));
 
 //Sing up page
 router.get('/signup', (req, res) => {
   res.render('signup');
-})
+});
 
 //REgister a new user
 //Do validation checks at front end
-router.post('/register', wrapper.asyncMiddleware(async(req,res) => {
+router.post('/signup', wrapper.asyncMiddleware(async(req,res) => {
   const un = req.body.username;
+
+  console.log(req.body);
+
   const isExisting = await userModel.checkIfExisting(un);
-  if(isExisting.length == 0 ) {
-    const newUser = await userModel.registerNewUser(req.body);
-  } else {
-    res.status(500).send("fail");
+  if(isExisting.length != 0 ) {
+    res.send("existing");
   }
-  console.log(isExisting.length);
-  res.status(200).send("success");
+
+  await userModel.registerNewUser(req.body);
+  res.redirect('myPage');
 }));
+
+//TO DO: LOGOUT
 
 module.exports = router;

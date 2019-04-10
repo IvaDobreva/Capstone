@@ -4,8 +4,7 @@ const db = require('../db');
 
 module.exports = {
   registerNewUser: (userdata) => {
-    console.log(userdata);
-    const QUERY_NEW_USER = `INSERT INTO users(username, password, name, email, nationality) VALUES ('${userdata.username}', '${userdata.password}', '${userdata.realname}', '${userdata.email}', '${userdata.nationality}');`;
+    const QUERY_NEW_USER = `INSERT INTO users(username, password, name, email, nationality) VALUES ('${userdata.username}', '${userdata.pass}', '${userdata.realname}', '${userdata.email}', '${userdata.country}');`;
     return db.getQueryResult(QUERY_NEW_USER);
   },
 
