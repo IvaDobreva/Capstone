@@ -46,7 +46,7 @@ router.post('/login', wrapper.asyncMiddleware(async(req, res) => {
   res.cookie('token', token);
 
   //redirect to my page or index page
-  res.redirect('myPage');
+  res.send({login: 'success'});
 }));
 
 //Sing up page
