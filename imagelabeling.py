@@ -12,7 +12,7 @@ from google.cloud import vision
 from google.cloud.vision import types
 
 app = Flask(__name__)
-app.run( port=3000, debug=True)
+
 mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_PORT'] = 3306
@@ -91,3 +91,6 @@ def label_img():
         cursor.execute(UPDATE_LABELS % (','.join(label_list), img[0]))
         conn.commit()
     return str(label_list)
+
+if __name__ == "__main__":
+    app.run(port=3001, debug=True)

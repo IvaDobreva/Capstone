@@ -20,8 +20,7 @@ router.get('/', wrapper.asyncMiddleware(async(req, res) => {
   console.log(vocab);
 
 // /  res.send({image: randImg[0]['imgname']});
-  res.render("index", {image: "/images/"+randImg[0]['imgname'],
-                        word: randImg[0]['kor_word']});
+  res.render("index", {image: "/images/"+randImg[0]['imgname']});
 }));
 
 module.exports = router;

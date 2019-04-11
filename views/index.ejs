@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <head>
     <title>Bird Korea</title>
     <link rel='stylesheet' href='/stylesheets/main.css'>
@@ -16,16 +16,29 @@
     </header>
 
     <div class="body">
-        <img src= "<%=image%>" width="400">
+         <img id="img" src= "<%=image%>" width="400">
         <h3>What does this image mean?</h3>
         <h3>Quiz : 1/200</h3>
         <div class='answer'>
           <input onchange="" />
           <button onclick ="">GO</button>
-          <button onclick ="">NEXT</button>
+          <button id="next_btn" onclick ="">NEXT</button>
       </div>
     </div>
 
   </body>
+
+  <script>
+  $(document).ready(function(){
+    $("#next_btn").click(function(data){
+      $.get("/game/getImage")
+        .done(function( data) {
+          console.log(data['image']);
+          $("#img").attr("src",data['image']);
+        });
+    });
+
+  });
+  </script>
 
 </html>

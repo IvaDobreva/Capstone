@@ -20,7 +20,7 @@ router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
   const vocab = await vocModel.getVocab(randImg[0]['imgname']);
   console.log(vocab);
 
-  res.send({image: randImg[0]['imgname'],
+  res.send({image: "/images/"+randImg[0]['imgname'],
             kor: vocab[0]['kor_word'],
             eng: vocab[0]['eng_word'],
             level: vocab[0]['level'],
