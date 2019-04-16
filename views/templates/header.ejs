@@ -1,19 +1,29 @@
+<head>
+
+
+    <title>Bird Korea</title>
+    <link rel='stylesheet' href='/stylesheets/main.css'>
+    <link rel='stylesheet' href='/stylesheets/fontfaces.css'>
+    <script src="scripts/modernizr.js"></script>
+    <script src="scripts/loader.js"></script>
+
+</head>
+
+
+
 <h1>B I R D <span class="korea">Korea</span></h1>
 <a href="/">Home</a> |
 <a href="/game">Game</a> |
 <a href="/map">Korean-Image Map</a> |
-<a id = "login" href="/login">Log In</a> |
+<a href="/about">About</a> ||
 <a id = "signup" href="/signup">Sign Up</a> |
-<a href="/test">Test Page</a>
+<a id = "login" href="/login">Log In</a> |
 
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
 
 <script>
   console.log(<%=token%>);
   if(<%=token%> == true) {
-    $('#login').replaceWith("<a data-method=\"delete\" href=\"/logout\">LogOUT</a>");
-    $('#signup').remove();
+    $('#login').replaceWith("<a href=\"/logout\">LogOUT</a>");
+    $('#signup').replaceWith("<a href=\"/users/profile\">Profile</a>");
   }
 </script>

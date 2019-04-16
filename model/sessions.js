@@ -16,5 +16,10 @@ module.exports = {
   checkSession: (token) => {
     const QUERY_SESSION_USER = `SELECT * FROM users, sessions WHERE token = '${token}' AND idsessions = users.id;`;
     return db.getQueryResult(QUERY_SESSION_USER);
+  },
+
+  getUID: (token) => {
+    const QUERY_GET_UID = `SELECT userID FROM sessions WHERE token = '${token}';`;
+    return db.getQueryResult(QUERY_GET_UID);
   }
 };

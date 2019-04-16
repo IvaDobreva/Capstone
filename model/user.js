@@ -16,5 +16,10 @@ module.exports = {
   userLogin: (uname, pass) => {
     const QUERY_LOGIN = `SELECT * FROM users WHERE username = '${uname}' AND password = '${pass}';`;
     return db.getQueryResult(QUERY_LOGIN);
+  },
+
+  getUserData: (uid) => {
+    const QUERY_FIND_BY_ID = `SELECT * FROM users WHERE id = '${uid}';`;
+    return db.getQueryResult(QUERY_FIND_BY_ID);
   }
 }

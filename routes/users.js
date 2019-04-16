@@ -79,4 +79,18 @@ router.get('/logout', wrapper.asyncMiddleware(async(req, res) => {
   res.redirect('/');
 }));
 
+router.get('/users/profile', wrapper.asyncMiddleware(async(req, res) => {
+
+  if(req.headers.cookie == undefined){
+    res.render('profile', {token: "false"});
+  }
+
+  const token = cookies.parse(req.headers.cookie)['token'];
+  const uid = await session.getUID(token);
+  const uprofile = await userModel.getUserData(uid[0]['userID']);
+  console.log(uprofile[0]);
+  res.render('profile', {token: "true",
+                        user: uprofile[0]});
+}));
+
 module.exports = router;
