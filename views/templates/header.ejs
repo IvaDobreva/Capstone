@@ -2,6 +2,14 @@
 <a href="/">Home</a> |
 <a href="/game">Game</a> |
 <a href="/map">Korean-Image Map</a> |
-<a href="/login">Log In</a> |
-<a href="/signup">Sign Up</a> |
+<a id = "login" href="/login">Log In</a> |
+<a id = "signup" href="/signup">Sign Up</a> |
 <a href="/test">Test Page</a>
+
+<script>
+  console.log(<%=token%>);
+  if(<%=token%> == true) {
+    $('#login').replaceWith("<a data-method=\"delete\" href=\"/logout\">LogOUT</a>");
+    $('#signup').remove();
+  }
+</script>

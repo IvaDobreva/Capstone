@@ -11,7 +11,7 @@ const userModel = require('../model/user');
 const session = require('../model/sessions');
 
 router.get('/login', wrapper.asyncMiddleware(async(req, res) => {
-  res.render('login');
+  res.render('login', {token: 'false'});
 }));
 
 router.get('/myPage', wrapper.asyncMiddleware(async(req, res) => {
@@ -46,7 +46,7 @@ router.post('/login', wrapper.asyncMiddleware(async(req, res) => {
   res.cookie('token', token);
 
   //redirect to my page or index page
-  res.send({login: 'success'});
+  res.redirect('/');
 }));
 
 //Sing up page
@@ -70,6 +70,13 @@ router.post('/signup', wrapper.asyncMiddleware(async(req,res) => {
   res.redirect('myPage');
 }));
 
-//TO DO: LOGOUT
+router.get('/logout', wrapper.asyncMiddleware(async(req, res) => {
+  //delete the token
+  const token = cookies.parse(req.headers.cookie)['token'];
+  await session.deleteSession(token);
+  //Send empty token
+  res.clearCookie('token');
+  res.redirect('/');
+}));
 
 module.exports = router;

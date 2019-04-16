@@ -8,8 +8,9 @@ module.exports = {
     return db.getQueryResult(QUERY_NEW_SESSION);
   },
 
-  deleteSession: (uname) => {
-    return db.getQueryResult();
+  deleteSession: (token) => {
+    const QUERY_DELETE_SESSION = `DELETE FROM sessions WHERE token = '${token}'`;
+    return db.getQueryResult(QUERY_DELETE_SESSION);
   },
 
   checkSession: (token) => {

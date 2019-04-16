@@ -16,11 +16,16 @@ router.get('/', wrapper.asyncMiddleware(async(req, res) => {
   const rows = await imageModel.getTotalRows();
   const randImg = await imageModel.getRandImg(rows[0]['COUNT(*)']);
 
-  const vocab = await vocModel.getVocab(randImg[0]['imgname']);
-  console.log(vocab);
+  if(req.headers.cookie == undefined) {
+    res.render("index", {image: "/images/"+randImg[0]['imgname'],
+                        token: "false"});
+    res.end;
+  }
+  const token = cookies.parse(req.headers.cookie)['token'];
 
-// /  res.send({image: randImg[0]['imgname']});
-  res.render("index", {image: "/images/"+randImg[0]['imgname']});
+  res.render("index", {image: "/images/"+randImg[0]['imgname'],
+                        token: "true"});
+
 }));
 
 module.exports = router;
