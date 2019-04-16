@@ -9,8 +9,11 @@ const imageModel = require('../model/image');
 const vocModel = require('../model/vocabulary');
 
 router.get('/', (req, res) => {
-  console.log(cookies.parse(req.headers.cookie)['token']);
-  res.render('game', {cookie: ""});
+  if(req.headers.cookie == undefined) {
+    res.render('game', {token: "false"});
+    //res.redirect('/login');
+  }
+  res.render('game', {token: "true"});
 });
 
 router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
