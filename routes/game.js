@@ -30,4 +30,11 @@ router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
             type: vocab[0]['type']});
 }));
 
+router.post('/word', wrapper.asyncMiddleware(async(req, res) => {
+  const word = req.body['word'];
+  const img = req.body['image'];
+  
+  res.send("200");
+}));
+
 module.exports = router;

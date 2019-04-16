@@ -16,12 +16,12 @@
     </header>
 
     <div class="body">
-         <img id="img" src= "<%=image%>" width="400">
+         <img id="img" src= "<%=image%>" width="400" height="300">
         <h3>What does this image mean?</h3>
-        <h3>Quiz : 1/200</h3>
+        <h3 id="counter">Quiz : 0/200</h3>
         <div class='answer'>
-          <input onchange="" />
-          <button onclick ="">GO</button>
+          <input id="word_field" />
+          <button id="go_btn" onclick ="">GO</button>
           <button id="next_btn" onclick ="">NEXT</button>
       </div>
     </div>
@@ -29,15 +29,32 @@
   </body>
 
   <script>
+  var count = 0;
   $(document).ready(function(){
     $("#next_btn").click(function(data){
       $.get("/game/getImage")
         .done(function( data) {
           console.log(data['image']);
           $("#img").attr("src",data['image']);
+          $("#counter").replaceWith("<h3 id=\"counter\">Quiz : " + count + "/200</h3>");
+          count = count + 1;
         });
     });
+  });
 
+  $(document).ready(function(){
+    $("#go_btn").click(function(data){
+      $.post('/game/word',  {word: $("#word_field").val(),
+                              image: $("#img").val()});
+      //Clear input
+      $.get("/game/getImage")
+        .done(function( data) {
+          console.log(data['image']);
+          $("#img").attr("src",data['image']);
+          $("#counter").replaceWith("<h3 id=\"counter\">Quiz : " + count + "/200</h3>");
+          count = count + 1;
+        });
+    });
   });
   </script>
 
