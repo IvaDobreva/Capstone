@@ -16,5 +16,15 @@ module.exports = {
   addVocab: (word, trans, level, type) => {
     const QUERY_ADD_NEW = `INSERT INTO vocabulary(kor_word, eng_word) VALUES ('${word}', '${trans}');`;
     return db.getQueryResult(QUERY_ADD_NEW);
+  },
+
+  getTranslationENG: (kor_word) => {
+    const QUERY_GET_ENG = `SELECT eng_word FROM vocabulary WHERE kor_word = '${kor_word}';`;
+    return db.getQueryResult(QUERY_GET_ENG);
+  },
+
+  getTranslationKOR: (eng_word) => {
+    const QUERY_GET_ENG = `SELECT kor_word FROM vocabulary WHERE eng_word = '${eng_word}';`;
+    return db.getQueryResult(QUERY_GET_ENG);
   }
 }

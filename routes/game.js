@@ -7,6 +7,7 @@ const cookies = require('cookie');
 const wrapper = require('../model/wrapper');
 const imageModel = require('../model/image');
 const vocModel = require('../model/vocabulary');
+const image = require('../model/image');
 
 router.get('/', (req, res) => {
   if(req.headers.cookie == undefined) {
@@ -31,10 +32,10 @@ router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
 }));
 
 router.post('/word', wrapper.asyncMiddleware(async(req, res) => {
-  const word = req.body['word'];
-  const img = req.body['image'];
-  
-  res.send("200");
+  if(req.body['word'] == req.body['image']) {
+    res.send({answer: "true"});
+  }
+  res.send({answer: "false"});
 }));
 
 module.exports = router;
