@@ -16,7 +16,7 @@
     </header>
 
     <div class="body">
-         <img id="img" val="<%=kor%>" src= "<%=image%>" width="400" height="300">
+         <img id="img" src= "<%=image%>" width="400" height="300">
         <h3>What does this image mean?</h3>
         <h3 id="counter">Quiz : 0/200</h3>
         <div class='answer'>
@@ -38,6 +38,7 @@
           $("#img").attr("val", data['kor']);
           $("#counter").replaceWith("<h3 id=\"counter\">Quiz : " + count + "/200</h3>");
           count = count + 1;
+          console.log(data['kor']);
         });
     });
   });
@@ -49,6 +50,7 @@
         function(data) {
           console.log("answer: " + data['answer']);
         });
+
       //TO DO: Clear input
       $.get("/game/getImage")
         .done(function( data) {

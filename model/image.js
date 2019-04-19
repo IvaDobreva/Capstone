@@ -10,7 +10,7 @@ module.exports = {
 
   getRandImg: (totalRows) => {
     const randNum = (Math.floor(Math.random()*totalRows)+1);
-    const GET_RANDOM_IMG = `SELECT imgname FROM image WHERE id=${randNum};`;
+    const GET_RANDOM_IMG = `SELECT * FROM image WHERE id=${randNum};`;
     return db.getQueryResult(GET_RANDOM_IMG);
   },
 

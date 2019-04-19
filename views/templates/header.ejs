@@ -21,8 +21,7 @@
 
 
 <script>
-  console.log(<%=token%>);
-  if(<%=token%> == true) {
+  if(<%=token%> == "true") {
     $('#login').replaceWith("<a href=\"/logout\">LogOUT</a>");
     $('#signup').replaceWith("<a href=\"/users/profile\">Profile</a>");
   }
