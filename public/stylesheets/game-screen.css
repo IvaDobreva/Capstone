@@ -1,10 +1,10 @@
 /* game-screen style */
-
 /* 일단 이미지보드의 크기는 8em으로 설정. 차후에 다시 수정. */
+/* 이미지가 들어갈 부분의 배경은 파란색으로 설정. 일단.*/
 #game-screen .image-board {
   position : relative;
-  width : 150;
-  height : 150;
+  width : 500;
+  height : 500;
   text-align: center;
 }
 
@@ -18,4 +18,29 @@
   width : 1em;
   height : 1em;
   left : -1000px;
+}
+
+#game-screen .time {
+  margin-left : 270px;
+  margin-top : 50px;
+  border-style: solid;
+  height : 20px;
+  width : 250px;
+  border-width: 2px;
+  border-color : yellow;
+  border-radius : 10px;
+  background-color : red;
+}
+
+#game-screen .time .indicator {
+  background-color : blue;
+  border-width: 2px;
+  border-color : white;
+  border-radius : 7px 0px 0px 7px;
+  height : 16px;
+  width : 100%;
+}
+
+#quiz-image {
+  width : 400px;
 }

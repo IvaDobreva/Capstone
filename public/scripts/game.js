@@ -1,5 +1,6 @@
 // bird.game 모듈 구현.
-// 현재 이 모듈은 showScreen이라는 단하나의 함수만 제공.
+// 게임의 핵심함수 showScreen이 포함.
+// 게임 기능의 중심.
 bird.game = (function() {
   var dom = bird.dom,
   $ = dom.$;
@@ -13,7 +14,7 @@ bird.game = (function() {
     // $이 Sizzle.
     // screen 에는 해당 html 코드가 통째로 들어간다.
     var screen = $("#" + screenId)[0];
-
+    
     if (activeScreen) {
       dom.removeClass(activeScreen, "active");
     }

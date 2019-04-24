@@ -9,13 +9,14 @@ bird.display = (function() {
   var firstRun = true;
 
   function setup() {
-    var boardElement = $("#game-screen .image-board")[0];
+    var boardElement = $("#game-screen .image-board")[0]; //view 와 통신하는 부분.
+    
     imageSize = bird.settings.imageSize; //loader 에 세팅된 이미지사이즈 100을 불러준다.
 
     canvas = document.createElement("canvas");
     ctx = canvas.getContext("2d");
     dom.addClass(canvas, "board");
-    canvas.width = imageSize; //받아온 이미즈 사이즈대로 이미지판을 그린다. 
+    canvas.width = imageSize; //받아온 이미즈 사이즈대로 이미지판을 그린다.
     canvas.height = imageSize;
 
     boardElement.appendChild(canvas);

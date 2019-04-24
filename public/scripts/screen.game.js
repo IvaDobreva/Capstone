@@ -6,27 +6,56 @@ bird.screens["game-screen"] = (function () {
   var firstRun = true;
   var dom = bird.dom;
 
-  // function drawImage() {
-  //   const canvas = document.getElementById('canvas');
-  //   const ctx = canvas.getContext('2d');
-  //   const image = document.getElementById('source'); //여기서 source 로 받을게 아니라, 리퀘스트 보내야한다.
-  //   ctx.drawImage(image, 0, 0, 100, 100, 0, 0, 90, 90);
-  // }
+
+
+  var count = 0;
+
+  function startGame() {
+    gameState = {
+      level : 0,
+      score : 0,
+      timer : 100, // setTimeout 함수가 참조.
+      startTime : 0, // 현재 레벨을 시작한 시간.
+      endTime : 0, // 게임이 종료될 때까지의 시간.
+    };
+  }
 
   function setup() {
-    /* 그냥 여기 간단하게 게임 구현 하자. */
-    //drawImage();
+
+    /* next 버튼 클릭 */
     dom.bind("#game-screen button.answer", "click", function() {
-      console.log("next버튼이 클릭되었습니다.");
-      /* 여기서 입력받고 리퀘스트 들어간다. */
+
+      /* getImage 구현. */
+      $.get("/game/getImage")
+        .done(function(data) {
+          count = count + 1;
+          $("#quiz-image").attr("src",data['image']);
+          $("#quiz-image").attr("val", data['kor']);
+          $("#counter").replaceWith("<h3 id =\"counter\">Quiz : " + count + "/200</h3>")
+          console.log(data['kor']);
+        });
     });
   }
+
+
+  function updateTimer() {
+    gameState.timer = gameState.timer - 1;
+    var progress = $("#game-screen .time .indicator")[0];
+    progress.style.width = gameState.timer + "%";
+
+    if(progress.style.width === "0%"){
+      run();
+    }
+  }
+
 
   function run() {
     if(firstRun) {
       setup();
       firstRun = false;
     }
+    startGame();
+    setInterval(updateTimer, 1000 / 10);
   }
 
   return {
