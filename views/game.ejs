@@ -20,12 +20,14 @@
 
     <script src="scripts/modernizr.js"></script>
     <script src="scripts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link rel='stylesheet' href='/stylesheets/main.css'>
     <link rel='stylesheet' href='/stylesheets/splash-screen.css'>
     <link rel='stylesheet' href='/stylesheets/main-menu.css'>
     <link rel='stylesheet' href='/stylesheets/game-screen.css'>
   </head>
+
 
   <body>
     <!--include ejs file like this.-->
@@ -58,19 +60,31 @@
         </ul>
       </div>
 
+
       <!-- 게임 화면 -->
       <div class="screen" id="game-screen">
+
         <div class="image-board">
-          <h2>What does this image mean?</h2>
-          <img id="source"
-               src="https://mdn.mozillademos.org/files/5397/rhino.jpg"
-               width="300">
+          <img id='quiz-image' src='images/car'/>
         </div>
+
         <div>
           <input onchange="" />
           <button class="answer" onclick ="" name="next">NEXT</button>
         </div>
+
+        <div class="counter-area">
+          <h3 id ="counter">Quiz : 0/200</h3>
+        </div>
+
+        <div class="timer">
+          <div class="time">
+            <div class="indicator"></div>
+          </div>
+        </div>
+
       </div>
+
 
       <div class="screen" id="high-scores">game</div>
 
