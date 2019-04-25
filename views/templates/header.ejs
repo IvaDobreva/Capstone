@@ -1,5 +1,6 @@
-<head>
 
+
+<head>
 
     <title>Bird Korea</title>
     <link rel='stylesheet' href='/stylesheets/main.css'>
@@ -19,9 +20,9 @@
 <a id = "signup" href="/signup">Sign Up</a> |
 <a id = "login" href="/login">Log In</a> |
 
-
 <script>
-  if(<%=token%> == "true") {
+  console.log("<%=token%>");
+  if(<%=token%> == true) {
     $('#login').replaceWith("<a href=\"/logout\">LogOUT</a>");
     $('#signup').replaceWith("<a href=\"/users/profile\">Profile</a>");
   }
