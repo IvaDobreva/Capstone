@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   if(cookies.parse(req.headers.cookie)['token'] == undefined) {
     res.render('game', {token: "false"});
   }
-
+  
   res.render('game', {token: "true"});
 });
 

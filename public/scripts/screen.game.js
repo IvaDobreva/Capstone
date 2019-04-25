@@ -10,6 +10,30 @@ bird.screens["game-screen"] = (function () {
 
   var count = 0;
 
+  function GetImage(count) {
+    $.get("/game/getImage")
+      .done(function( data) {
+        console.log(data['image']);
+        $("#quiz-image").attr("src",data['image']);
+        $("#quiz-image").attr("val", data['kor']);
+        $("#counter").replaceWith("<h3 id=\'counter\'> Quiz : " + count + "/10</h3>");
+        count = count + 1;
+      });
+  }
+
+  GetImage(count);
+  $('#next_btn').click(function(data){
+    count = count + 1 ;
+    //
+    $.post('/game/word',  {word:$("#word_field").val(), image: $('#quiz-image').attr("val")},
+      function(data) {
+        console.log("answer: " + data['answer']);
+      });
+
+      //TO DO: Clear input
+    GetImage(count);
+  });
+
   function startGame() {
     gameState = {
       level : 0,
@@ -20,23 +44,23 @@ bird.screens["game-screen"] = (function () {
     };
   }
 
+
   function setup() {
 
     /* next 버튼 클릭 */
     dom.bind("#game-screen button.answer", "click", function() {
 
-      /* getImage 구현. */
+      /* getImage 구현.
       $.get("/game/getImage")
         .done(function(data) {
           count = count + 1;
           $("#quiz-image").attr("src",data['image']);
-          $("#quiz-image").attr("val", data['kor']);
-          $("#counter").replaceWith("<h3 id =\"counter\">Quiz : " + count + "/200</h3>")
+
+          $("#counter").replaceWith("<h3 id =\"counter\">Quiz : " + count + "/10</h3>")
           console.log(data['kor']);
-        });
+        });*/
     });
   }
-
 
   function updateTimer() {
     gameState.timer = gameState.timer - 1;

@@ -73,7 +73,7 @@
         </div>
 
         <div class="counter-area">
-          <h3 id ="counter">Quiz : 0/200</h3>
+          <h3 id ="counter">Quiz : 0/10</h3>
         </div>
 
         <div class="timer">
@@ -121,31 +121,4 @@
     }
   </script>
 
-  <script>
-  var count = 0;
-  function GetImage(count) {
-    $.get("/game/getImage")
-      .done(function( data) {
-        console.log(data['image']);
-        $("#quiz-image").attr("src",data['image']);
-        $("#quiz-image").attr("val", data['kor']);
-        $("#counter").replaceWith("<h3 id=\"counter\">Quiz : " + count + "/200</h3>");
-        count = count + 1;
-      });
-  }
-
-  GetImage(count);
-  $('#next_btn').ready(function(){
-    count = count + 1 ;
-    $("#go_btn").click(function(data){
-      $.post('/game/word',  {word:$("#word_field").val(), image: $('#quiz-image').attr("val")},
-        function(data) {
-          console.log("answer: " + data['answer']);
-        });
-
-      //TO DO: Clear input
-      GetImage(count);
-    });
-  });
-  </script>
 </html>
