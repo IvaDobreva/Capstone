@@ -8,30 +8,59 @@ bird.screens["game-screen"] = (function () {
 
 
 
-  var count = 0;
+  var count = 0; //Counting number of words
+  var cards = []; //Here list of answerd images will be kept
+  var answers = [];
+  var curr_score = 0; //current score
 
   function GetImage(count) {
     $.get("/game/getImage")
       .done(function( data) {
-        console.log(data['image']);
         $("#quiz-image").attr("src",data['image']);
-        $("#quiz-image").attr("val", data['kor']);
         $("#counter").replaceWith("<h3 id=\'counter\'> Quiz : " + count + "/10</h3>");
         count = count + 1;
+        answers = data['kor'];
+        cards.push(data['image']);
       });
   }
 
+  function getIdentity() {
+    var name = "token";
+    var ca = document.cookie.split('; ');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i].split("=");
+      if(c[0] == name ) {
+        return c[1];
+      }
+    }
+  }
+
   GetImage(count);
+
   $('#next_btn').click(function(data){
     count = count + 1 ;
-    //
-    $.post('/game/word',  {word:$("#word_field").val(), image: $('#quiz-image').attr("val")},
+    GetImage(count);
+    //check if the answer is right
+    var answer = $('#answer').val();
+    console.log(answers);
+    for(var i=0; i < answers.length; i++) {
+      if(answer == answers[i]) {
+        curr_score += 1;
+        console.log("answer is right");
+      }
+    }
+
+    $('#answer').val(''); //Clear input field
+    if(count == 10 ) {
+      var token = getIdentity();
+      window.location.replace("/");
+      $.post('/user/score',  {score: curr_score, token: token},
       function(data) {
         console.log("answer: " + data['answer']);
       });
+      curr_score = 0 ;
+    }
 
-      //TO DO: Clear input
-    GetImage(count);
   });
 
   function startGame() {
@@ -74,7 +103,7 @@ bird.screens["game-screen"] = (function () {
 
 
   function run() {
-  
+    //Does not need first run check
     startGame();
     setInterval(updateTimer, 1000 / 10);
   }

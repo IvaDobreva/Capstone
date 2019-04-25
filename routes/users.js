@@ -88,9 +88,20 @@ router.get('/users/profile', wrapper.asyncMiddleware(async(req, res) => {
   const token = cookies.parse(req.headers.cookie)['token'];
   const uid = await session.getUID(token);
   const uprofile = await userModel.getUserData(uid[0]['userID']);
-  console.log(uprofile[0]);
+
   res.render('profile', {token: "true",
                         user: uprofile[0]});
 }));
+
+//Update users score after the game ends
+router.post('/user/score', wrapper.asyncMiddleware(async(req, res) => {
+  const token = req.body.token;
+  const uscore = req.body.score;
+
+  const uid = await session.getUID(token);
+  await userModel.updateScore(uid[0]['userID'], uscore);
+
+  res.render('score');
+})) ;
 
 module.exports = router;

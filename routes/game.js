@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   if(cookies.parse(req.headers.cookie)['token'] == undefined) {
     res.render('game', {token: "false"});
   }
-  
+
   res.render('game', {token: "true"});
 });
 
@@ -45,15 +45,8 @@ router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
 
   console.log(kor);
   res.send({image: "/images/"+randImg[0]['imgname'],
-            kor: kor});
-}));
-
-router.post('/word', wrapper.asyncMiddleware(async(req, res) => {
-  //......
-  if(req.body['word'] == req.body['image']) {
-    res.send({answer: "true"});
-  }
-  res.send({answer: "false"});
+            kor: kor,
+            name: randImg[0]['imgname']});
 }));
 
 module.exports = router;

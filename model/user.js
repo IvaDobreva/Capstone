@@ -21,5 +21,10 @@ module.exports = {
   getUserData: (uid) => {
     const QUERY_FIND_BY_ID = `SELECT * FROM users WHERE id = '${uid}';`;
     return db.getQueryResult(QUERY_FIND_BY_ID);
+  },
+
+  updateScore: (uid, score) => {
+    const QUERY_UPDATE_SCORE = `UPDATE users SET score='${score}' WHERE id='${uid}'`;
+    return db.getQueryResult(QUERY_UPDATE_SCORE);
   }
 }
