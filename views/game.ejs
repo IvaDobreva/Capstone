@@ -9,7 +9,7 @@
 
     <!-- Bootstrap lib Start -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Bootstrap finish -->
@@ -64,12 +64,12 @@
       <div class="screen" id="game-screen">
 
         <div class="image-board">
-          <img id='quiz-image' src='images/car'/>
+          <img id='quiz-image' src=''/>
         </div>
 
         <div>
           <input onchange="" />
-          <button class="answer" onclick ="" name="next">NEXT</button>
+          <button class="answer" id="next_btn" onclick ="" name="next">NEXT</button>
         </div>
 
         <div class="counter-area">
@@ -112,7 +112,6 @@
   </body>
 
   <script>
-
     if(<%=token%> == false) {
       $('#loginPopUp').modal({keyboard: false, backdrop: 'static'});
     }
@@ -120,6 +119,33 @@
     function loginBtn() {
       window.location.replace("login/");
     }
+  </script>
 
-</script>
+  <script>
+  var count = 0;
+  function GetImage(count) {
+    $.get("/game/getImage")
+      .done(function( data) {
+        console.log(data['image']);
+        $("#quiz-image").attr("src",data['image']);
+        $("#quiz-image").attr("val", data['kor']);
+        $("#counter").replaceWith("<h3 id=\"counter\">Quiz : " + count + "/200</h3>");
+        count = count + 1;
+      });
+  }
+
+  GetImage(count);
+  $('#next_btn').ready(function(){
+    count = count + 1 ;
+    $("#go_btn").click(function(data){
+      $.post('/game/word',  {word:$("#word_field").val(), image: $('#quiz-image').attr("val")},
+        function(data) {
+          console.log("answer: " + data['answer']);
+        });
+
+      //TO DO: Clear input
+      GetImage(count);
+    });
+  });
+  </script>
 </html>

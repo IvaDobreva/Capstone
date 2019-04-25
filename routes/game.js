@@ -12,8 +12,8 @@ const image = require('../model/image');
 router.get('/', (req, res) => {
   if(cookies.parse(req.headers.cookie)['token'] == undefined) {
     res.render('game', {token: "false"});
-    //res.redirect('/login');
   }
+
   res.render('game', {token: "true"});
 });
 
