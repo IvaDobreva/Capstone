@@ -54,7 +54,7 @@ bird.screens["game-screen"] = (function () {
     if(count == 10 ) {
       var token = getIdentity();
       window.location.replace("/");
-      $.post('/user/score',  {score: curr_score, token: token},
+      $.post('/user/score',  {score: curr_score, token: token, history: cards},
       function(data) {
         console.log("answer: " + data['answer']);
       });

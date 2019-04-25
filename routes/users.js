@@ -99,8 +99,9 @@ router.post('/user/score', wrapper.asyncMiddleware(async(req, res) => {
   const uscore = req.body.score;
 
   const uid = await session.getUID(token);
-  await userModel.updateScore(uid[0]['userID'], uscore);
-
+  const score = await userModel.getScore(uid[0]['userID']);
+  await userModel.updateScore(uid[0]['userID'], (score[0]['score']+uscore));
+  
   res.render('score');
 })) ;
 
