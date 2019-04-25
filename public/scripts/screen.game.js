@@ -74,10 +74,7 @@ bird.screens["game-screen"] = (function () {
 
 
   function run() {
-    if(firstRun) {
-      setup();
-      firstRun = false;
-    }
+  
     startGame();
     setInterval(updateTimer, 1000 / 10);
   }
