@@ -10,7 +10,9 @@ bird.screens["game-screen"] = (function () {
 
   var count = 0; //Counting number of words
   var cards = []; //Here list of answerd images will be kept
-  var answers = [];
+  var answers = []; //Available answers
+  var uansw = []; //Answerd by the user
+  var uansBool = []; //정답 = 1 오답 =0
   var curr_score = 0; //current score
 
   function GetImage(count) {
@@ -20,7 +22,7 @@ bird.screens["game-screen"] = (function () {
         $("#counter").replaceWith("<h3 id=\'counter\'> Quiz : " + count + "/10</h3>");
         count = count + 1;
         answers = data['kor'];
-        cards.push(data['image']);
+        cards.push(data['id']);
       });
   }
 
@@ -39,28 +41,34 @@ bird.screens["game-screen"] = (function () {
 
   $('#next_btn').click(function(data){
     count = count + 1 ;
+    var ansFlag = false;
     GetImage(count);
     //check if the answer is right
     var answer = $('#answer').val();
-    console.log(answers);
+    uansw.push(answer);
     for(var i=0; i < answers.length; i++) {
       if(answer == answers[i]) {
         curr_score += 1;
+        flag = true;
         console.log("answer is right");
       }
+    }
+    if(flag == true ) {
+      uansBool.push(1);
+    } else {
+      uansBool.push(0);
     }
 
     $('#answer').val(''); //Clear input field
     if(count == 10 ) {
       var token = getIdentity();
-      window.location.replace("/");
-      $.post('/user/score',  {score: curr_score, token: token, history: cards},
-      function(data) {
-        console.log("answer: " + data['answer']);
-      });
-      curr_score = 0 ;
+      $.post('/game/score',  {score: curr_score,
+                              token: token,
+                              hisImage: cards.toString(),
+                              hisAnswer: uansw.toString(),
+                              hisAnsBool: uansBool.toString()});
+      window.location.replace("/game/score");
     }
-
   });
 
   function startGame() {

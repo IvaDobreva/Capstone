@@ -93,16 +93,4 @@ router.get('/users/profile', wrapper.asyncMiddleware(async(req, res) => {
                         user: uprofile[0]});
 }));
 
-//Update users score after the game ends
-router.post('/user/score', wrapper.asyncMiddleware(async(req, res) => {
-  const token = req.body.token;
-  const uscore = req.body.score;
-
-  const uid = await session.getUID(token);
-  const score = await userModel.getScore(uid[0]['userID']);
-  await userModel.updateScore(uid[0]['userID'], (score[0]['score']+uscore));
-  
-  res.render('score');
-})) ;
-
 module.exports = router;

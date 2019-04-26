@@ -7,7 +7,9 @@ const cookies = require('cookie');
 const wrapper = require('../model/wrapper');
 const imageModel = require('../model/image');
 const vocModel = require('../model/vocabulary');
-const image = require('../model/image');
+const userModel = require('../model/user');
+const session = require('../model/sessions');
+const gameSession = require('../model/gameSession');
 
 router.get('/', (req, res) => {
   if(cookies.parse(req.headers.cookie)['token'] == undefined) {
@@ -18,13 +20,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
-  //1. Get random image
-  //2. get image's labels
-  //3. Find labels' translation
-  //Send to the sever
-  //{image: path,
-  //   kor: []}
-
   //Get random image by selecting random number from
   const rows = await imageModel.getTotalRows();
   const randImg = await imageModel.getRandImg(rows[0]['COUNT(*)']);
@@ -43,10 +38,37 @@ router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
     }
   }
 
-  console.log(kor);
   res.send({image: "/images/"+randImg[0]['imgname'],
             kor: kor,
-            name: randImg[0]['imgname']});
+            name: randImg[0]['imgname'],
+            id: randImg[0]['id']});
 }));
+
+//Update users score after the game ends
+router.get('/score', (req, res) => {
+  console.log(req.body);
+  res.render('score', {token: "true", score: 0});
+});
+
+router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
+  const token = req.body.token;
+  const uscore = req.body.score;
+
+  const uid = await session.getUID(token);
+  const score = await userModel.getScore(uid[0]['userID']);
+
+  const totalScore = parseInt(score[0]['score']) + parseInt(uscore);
+
+  await userModel.updateScore(uid[0]['userID'], totalScore);
+
+  const imageIdLst = req.body.hisImage.split(',');
+  const answLst = req.body.hisAnswer.split(',');
+  const answBool = req.body.hisAnsBool.split(',');
+
+  //Update game session table
+  for(let i=0; i < 10; i++) {
+    await gameSession.updateGameSession(uid[0]['userID'], imageIdLst[i], answLst[i], parseInt(answBool[i]));
+  }
+})) ;
 
 module.exports = router;
