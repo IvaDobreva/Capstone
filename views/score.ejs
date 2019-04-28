@@ -17,10 +17,12 @@
           <img id="img" align="middle" style="float:left" src= "<%=image[i]%>" width="200" height="200">
           <p> Possible Answers: </p>
           <ul>
-
-              <li> <%= answer[i][0]['kor_word'] %> </li>
-            
+            <% for(var j=0; j<(answer[i]).length; j++) { %>
+              <li> <%= answer[i][j]['kor_word'] %> </li>
+            <% } %>
           </ul>
+          <p>Your Answer: <%= uans[i] %> </p>
+          <p>Give us your translation: <input></p>
         </div>
       </br>
       <% } %>

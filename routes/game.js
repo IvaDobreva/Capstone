@@ -72,7 +72,7 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
   }
   //Update Vocab
   //Delete game session
-  console.log(answers[0][0]['kor_word']);
+
   res.render('score', {token: "true",
                        score: score[0]['score'],
                        image: images,

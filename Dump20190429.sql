@@ -29,7 +29,7 @@ CREATE TABLE `game_session` (
   `answer` varchar(45) DEFAULT NULL,
   `ansTrue` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `game_session` (
 
 LOCK TABLES `game_session` WRITE;
 /*!40000 ALTER TABLE `game_session` DISABLE KEYS */;
-INSERT INTO `game_session` VALUES (12,3,1,'거품',1),(13,3,3,'개',1),(14,3,2,'거북이',1),(15,3,1,'거품',1),(16,3,5,'겨울',1),(17,3,3,'강아지',1),(18,3,2,'거북이',1),(19,3,3,'개',1),(20,3,6,'차',1);
+INSERT INTO `game_session` VALUES (41,3,1,'거품',1),(42,3,3,'개',1),(43,3,6,'차',1),(44,3,6,'차',1),(45,3,2,'거북이',1),(46,3,3,'강아지',1),(47,3,6,'차',1),(48,3,1,'거품',1),(49,3,6,'차',1);
 /*!40000 ALTER TABLE `game_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,6 +93,32 @@ INSERT INTO `sessions` VALUES (73,3,'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZC
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_game_history`
+--
+
+DROP TABLE IF EXISTS `user_game_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `user_game_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT NULL,
+  `score` int(11) DEFAULT '0',
+  `date` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_game_history`
+--
+
+LOCK TABLES `user_game_history` WRITE;
+/*!40000 ALTER TABLE `user_game_history` DISABLE KEYS */;
+INSERT INTO `user_game_history` VALUES (1,3,12,'29-04-2019');
+/*!40000 ALTER TABLE `user_game_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -117,7 +143,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'user1','123','user','emailatgmail.com','UK',0),(2,'SOMENAME','bdej','eweff','feeef','fsefe',0),(3,'iva','123','Iva','somemail ','Bulgaria ',41),(4,'iva2','123','Iva','somemail ','Bulgaria ',0),(5,'undefined','undefined','undefined','undefined','undefined',0),(7,'nnnnn','undefined','undefined','uisbfkj@kjes','undefined',0);
+INSERT INTO `users` VALUES (1,'user1','123','user','emailatgmail.com','UK',0),(2,'SOMENAME','bdej','eweff','feeef','fsefe',0),(3,'iva','123','Iva','somemail ','Bulgaria ',11),(4,'iva2','123','Iva','somemail ','Bulgaria ',0),(5,'undefined','undefined','undefined','undefined','undefined',0),(7,'nnnnn','undefined','undefined','uisbfkj@kjes','undefined',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-26 18:19:16
+-- Dump completed on 2019-04-29  4:11:27
