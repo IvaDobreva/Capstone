@@ -4,16 +4,110 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#content3").click(function () {
+        if ($("#content2").css("display")=="none"){
+          $("#content2").css("display","block");
+        }else{
+          $("#content2").css("display","none");
+        }
+      });
+
+    });
+  </script>
+    <style type="text/css">
+    .card{
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      max-width: 300px;
+      margin: auto;
+      text-align: center;
+      font-family: Arial;
+
+    }
+
+    .title{
+      color: grey;
+      font-size: 18px;
+    }
+
+    #content2{
+      display: none;
+    }
+
+    table{
+      width: 80%;
+      margin: auto;
+    }
+
+    table, th, td{
+      border: 1px solid black;
+      border-collapse: collapse;
+      }
+
+     th,td{
+       padding: 15px;
+       text-align: left;
+     }
+
+    table#detail tr:nth-child(even){
+    background-color: #eeeeee;
+    }
+
+    table#detail tr:nth-child(odd){
+      background-color: #fff;
+    }
+
+    table#detail th{
+      background-color: black;
+      color: white;
+    }
+  </style>
   </head>
   <body>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <header>
-      <% include templates/header.ejs %>
-    </<header>
-  <div>Name: <%= user['name'] %> </div>
-  <div>Username: <%= user['username'] %> </div>
-  <div>E-mail: <%= user['email'] %> </div>
-  <div>Country: <%= user['nationality'] %> </div>
-  <div>Score: <%= user['score'] %> </div>
+  <header><% include templates/header.ejs %></header>
+  <div class="card">
+    <img src="/images/prof.png" alt="userprofile" style="width: 100%">
+    <h3>Username: <%= user['username'] %></h3>
+    <p class="title">Country: <%= user['nationality'] %></p>
+    <p>Name: <%= user['name'] %></p>
+    <p>E-mail: <%= user['email'] %></p>
+    <div id="content3" >Best Score: <%= user['score'] %> </br> </br> </div></div></br></br></br>
+    <div id="content2">
+      <table id="detail">
+        <tr>
+          <th>rank</th>
+          <th>level</th>
+          <th>score</th>
+          <th>Date</th>
+        </tr>
+      </table>
+        <script>
+          var data =[
+                  ['1', 'median', '97','2019-03-28'],
+                  ['13', 'median', '83','2019-03-23'],
+                  ['4', 'median', '93','2019-03-26']
+                  ]
+          var rank, level, score, date;
+
+          for(var i=0; i < data.length; i++){
+            var tb = document.getElementById('detail').insertRow(-1);
+            rank = tb.insertCell(0);
+            level = tb.insertCell(1);
+            score = tb.insertCell(2);
+            date = tb.insertCell(3);
+
+            var item = data[i];
+              rank.innerHTML = item[0];
+              level.innerHTML = item[1];
+              score.innerHTML = item[2];
+              date.innerHTML = item[3];
+
+          }
+        </script>
+    </div>
+  </br></br></br>
+  </div>
   </body>
 </html>
