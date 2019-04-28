@@ -17,5 +17,10 @@ module.exports = {
   getLabels: (image) => {
     const QUERY_GET_LABELS = `SELECT labels FROM image WHERE imgname = '${image}';`;
     return db.getQueryResult(QUERY_GET_LABELS);
+  },
+
+  getImage: (id) => {
+    const QUERY_GET_BY_ID = `SELECT imgname FROM image WHERE id='${id}';`;
+    return db.getQueryResult(QUERY_GET_BY_ID);
   }
 }

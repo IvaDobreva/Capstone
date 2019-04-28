@@ -10,7 +10,20 @@
     </header>
 
     <div class="body">
-      <div id="#score"> <h3> Your Score is: <%=score%> / 10 <h3> </div>
+      <div id="score"> <h3> Your Score is: <%=score%> / 10 <h3> </div>
+
+      <% for(var i=0; i<9; i++) { %>
+        <div class="card" style="clear: left">
+          <img id="img" align="middle" style="float:left" src= "<%=image[i]%>" width="200" height="200">
+          <p> Possible Answers: </p>
+          <ul>
+
+              <li> <%= answer[i][0]['kor_word'] %> </li>
+            
+          </ul>
+        </div>
+      </br>
+      <% } %>
     </div>
 
   </body>

@@ -26,17 +26,6 @@ bird.screens["game-screen"] = (function () {
       });
   }
 
-  function getIdentity() {
-    var name = "token";
-    var ca = document.cookie.split('; ');
-    for(var i = 0; i < ca.length; i++) {
-      var c = ca[i].split("=");
-      if(c[0] == name ) {
-        return c[1];
-      }
-    }
-  }
-
   GetImage(count);
 
   $('#next_btn').click(function(data){
@@ -61,9 +50,7 @@ bird.screens["game-screen"] = (function () {
 
     $('#answer').val(''); //Clear input field
     if(count == 10 ) {
-      var token = getIdentity();
       $.post('/game/score',  {score: curr_score,
-                              token: token,
                               hisImage: cards.toString(),
                               hisAnswer: uansw.toString(),
                               hisAnsBool: uansBool.toString()});

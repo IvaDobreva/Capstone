@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const cookies = require('cookie');
+const dateFormat = require('dateformat');
 
 const wrapper = require('../model/wrapper');
 const imageModel = require('../model/image');
@@ -10,6 +11,7 @@ const vocModel = require('../model/vocabulary');
 const userModel = require('../model/user');
 const session = require('../model/sessions');
 const gameSession = require('../model/gameSession');
+const userGame = require('../model/userGame');
 
 router.get('/', (req, res) => {
   if(cookies.parse(req.headers.cookie)['token'] == undefined) {
@@ -45,22 +47,53 @@ router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
 }));
 
 //Update users score after the game ends
-router.get('/score', (req, res) => {
-  console.log(req.body);
-  res.render('score', {token: "true", score: 0});
-});
+router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
+  const date = new Date();
+
+  //Get game history
+  const token = cookies.parse(req.headers.cookie)['token'];
+  const uid = await session.getUID(token);
+
+  const gameHistory = await gameSession.getGameSession(uid[0]['userID']);
+  const score = await userGame.getCurrentScore(uid[0]['userID'], dateFormat(date, "dd-mm-yyyy"));
+
+  //Get images and possible answers
+  let images = [];
+  let answers = [];
+  let uans = [];
+  for(let i=0; i<gameHistory.length; i++) {
+    const img = await imageModel.getImage(gameHistory[i]['imgid']);
+    images.push("/images/" + img[0]['imgname']);
+
+    const ans = await vocModel.getTranslationKOR(img[0]['imgname']);
+    answers.push(ans);
+
+    uans.push(gameHistory[i]['answer']);
+  }
+  //Update Vocab
+  //Delete game session
+  console.log(answers[0][0]['kor_word']);
+  res.render('score', {token: "true",
+                       score: score[0]['score'],
+                       image: images,
+                       answer: answers,
+                       uans: uans});
+}));
 
 router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
-  const token = req.body.token;
+  const token = cookies.parse(req.headers.cookie)['token'];
   const uscore = req.body.score;
 
   const uid = await session.getUID(token);
   const score = await userModel.getScore(uid[0]['userID']);
 
+  // Update user's total sore
   const totalScore = parseInt(score[0]['score']) + parseInt(uscore);
+  await userModel.updateScore(uid[0]['userID'], parseInt(uscore));
 
-  await userModel.updateScore(uid[0]['userID'], totalScore);
-
+  //Add a record to the played games history
+  const date = new Date();
+  await userGame.updateGameHistory(uid[0]['userID'], score[0]['score'], dateFormat(date, "dd-mm-yyyy"));
   const imageIdLst = req.body.hisImage.split(',');
   const answLst = req.body.hisAnswer.split(',');
   const answBool = req.body.hisAnsBool.split(',');
