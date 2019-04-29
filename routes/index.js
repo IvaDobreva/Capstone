@@ -16,13 +16,21 @@ router.get('/', wrapper.asyncMiddleware(async(req, res) => {
   const rows = await imageModel.getTotalRows();
   const randImg = await imageModel.getRandImg(rows[0]['COUNT(*)']);
   const kor = await vocModel.getTranslationKOR(randImg[0]['imgname']);
-  
-  if(cookies.parse(req.headers.cookie)['token'] == undefined) {
+  console.log(req.headers.cookie);
+
+  if(req.headers.cookie == undefined ) {
     res.render("index", {image: "/images/"+randImg[0]['imgname'],
-                        token: "false",
-                        kor: kor[0]['kor_word']});
+    token: "false",
+    kor: kor[0]['kor_word']});
     res.end;
   }
+    if(cookies.parse(req.headers.cookie)['token'] == undefined ) {
+      res.render("index", {image: "/images/"+randImg[0]['imgname'],
+      token: "false",
+      kor: kor[0]['kor_word']});
+      res.end;
+    }
+
   const token = cookies.parse(req.headers.cookie)['token'];
 
   res.render("index", {image: "/images/"+randImg[0]['imgname'],
