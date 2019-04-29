@@ -64,6 +64,7 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
   let images = [];
   let answers = [];
   let uans = [];
+
   for(let i=0; i<gameHistory.length; i++) {
     const img = await imageModel.getImage(gameHistory[i]['imgid']);
     images.push("/images/" + img[0]['imgname']);
@@ -92,7 +93,7 @@ router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
 
   // Update user's total sore
   const totalScore = parseInt(score[0]['score']) + parseInt(uscore);
-  await userModel.updateScore(uid[0]['userID'], parseInt(uscore));
+  await userModel.updateScore(uid[0]['userID'], totalScore);
 
   //Add a record to the played games history
   const date = new Date();
@@ -101,9 +102,10 @@ router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
   const answLst = req.body.hisAnswer.split(',');
   const answBool = req.body.hisAnsBool.split(',');
 
-  //Update game session table
+  //Update game session table and Vocab HITS variable
   for(let i=0; i < 10; i++) {
     await gameSession.updateGameSession(uid[0]['userID'], imageIdLst[i], answLst[i], parseInt(answBool[i]));
+    await vocModel.updateHitsScore(answLst[i]);
   }
 })) ;
 

@@ -26,5 +26,10 @@ module.exports = {
   getTranslationKOR: (eng_word) => {
     const QUERY_GET_ENG = `SELECT kor_word FROM vocabulary WHERE eng_word = '${eng_word}';`;
     return db.getQueryResult(QUERY_GET_ENG);
+  },
+
+  updateHitsScore: (kor_word) => {
+    const QUERY_UPDATE_HITS = `UPDATE vocabulary SET hits=hits+1 WHERE kor_word='${kor_word}' ;`;
+    return db.getQueryResult(QUERY_UPDATE_HITS);
   }
 }
