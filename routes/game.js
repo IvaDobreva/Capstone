@@ -74,8 +74,9 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
 
     uans.push(gameHistory[i]['answer']);
   }
-  //Update Vocab
+  console.log(answers);
   //Delete game session
+  await gameSession.deleteSession(uid[0]['userID']);
 
   res.render('score', {token: "true",
                        score: score[0]['score'],
@@ -97,7 +98,7 @@ router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
 
   //Add a record to the played games history
   const date = new Date();
-  await userGame.updateGameHistory(uid[0]['userID'], score[0]['score'], dateFormat(date, "dd-mm-yyyy"));
+  await userGame.updateGameHistory(uid[0]['userID'], parseInt(uscore), dateFormat(date, "dd-mm-yyyy"));
   const imageIdLst = req.body.hisImage.split(',');
   const answLst = req.body.hisAnswer.split(',');
   const answBool = req.body.hisAnsBool.split(',');
@@ -107,6 +108,9 @@ router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
     await gameSession.updateGameSession(uid[0]['userID'], imageIdLst[i], answLst[i], parseInt(answBool[i]));
     await vocModel.updateHitsScore(answLst[i]);
   }
+
+  console.log(uscore)
+  res.send({status: "success"});
 })) ;
 
 module.exports = router;

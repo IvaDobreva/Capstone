@@ -11,5 +11,10 @@ module.exports = {
   getGameSession: (uid) => {
     const QUERY_GET_GAME = `SELECT * FROM game_session WHERE uid='${uid}';`;
     return db.getQueryResult(QUERY_GET_GAME);
+  },
+
+  deleteSession: (uid) => {
+    const QUERY_DELETE_SESSION = `DELETE FROM game_session WHERE uid='${uid}';`;
+    return db.getQueryResult(QUERY_DELETE_SESSION);
   }
 }

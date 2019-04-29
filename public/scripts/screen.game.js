@@ -38,11 +38,11 @@ bird.screens["game-screen"] = (function () {
     for(var i=0; i < answers.length; i++) {
       if(answer == answers[i]) {
         curr_score += 1;
-        flag = true;
-        console.log("answer is right");
+        ansFlag = true;
+        break;
       }
     }
-    if(flag == true ) {
+    if(ansFlag == true ) {
       uansBool.push(1);
     } else {
       uansBool.push(0);
@@ -50,11 +50,17 @@ bird.screens["game-screen"] = (function () {
 
     $('#answer').val(''); //Clear input field
     if(count == 10 ) {
+      console.log(curr_score);
       $.post('/game/score',  {score: curr_score,
                               hisImage: cards.toString(),
                               hisAnswer: uansw.toString(),
-                              hisAnsBool: uansBool.toString()});
-      window.location.replace("/game/score");
+                              hisAnsBool: uansBool.toString()},
+          function(result) {
+            console.log(result['status']);
+            if(result['status'] == "success") {
+              window.location = "/game/score";
+            }
+          });
     }
   });
 
