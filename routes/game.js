@@ -14,6 +14,9 @@ const gameSession = require('../model/gameSession');
 const userGame = require('../model/userGame');
 
 router.get('/', (req, res) => {
+  if(req.headers.cookie == undefined) {
+    res.render('game', {token: 'false'})
+  }
   if(cookies.parse(req.headers.cookie)['token'] == undefined) {
     res.render('game', {token: "false"});
   }
