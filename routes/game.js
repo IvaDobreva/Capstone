@@ -64,20 +64,37 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
   let images = [];
   let answers = [];
   let uans = [];
+  let temp_ans = [];
 
   for(let i=0; i<gameHistory.length; i++) {
     const img = await imageModel.getImage(gameHistory[i]['imgid']);
     images.push("/images/" + img[0]['imgname']);
 
-    const ans = await vocModel.getTranslationKOR(img[0]['imgname']);
-    answers.push(ans);
+    //Get all labels for the image
+    let labels = await imageModel.getLabels(img[0]['imgname']);
+    labels = labels[0]['labels'].split(',');
+
+    //Get every word that matches the eng_word in vocabulary table
+    if(labels.length != 0 ) {
+      for(let k =0; k < labels.length; k++ ) {
+
+        const match = await vocModel.getVocab(labels[k].toLowerCase());
+        if(match.length != 0 ) {
+          temp_ans.push(match[0]);
+
+        }
+      }
+    }
+    answers.push(temp_ans);
+    temp_ans = [];
 
     uans.push(gameHistory[i]['answer']);
   }
-  console.log(answers);
-  //Delete game session
-  await gameSession.deleteSession(uid[0]['userID']);
 
+  //Delete game session
+//  await gameSession.deleteSession(uid[0]['userID']);
+  console.log(answers)
+  //Display results
   res.render('score', {token: "true",
                        score: score[0]['score'],
                        image: images,
@@ -103,13 +120,12 @@ router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
   const answLst = req.body.hisAnswer.split(',');
   const answBool = req.body.hisAnsBool.split(',');
 
-  //Update game session table and Vocab HITS variable
+  //Update game session table
   for(let i=0; i < 10; i++) {
     await gameSession.updateGameSession(uid[0]['userID'], imageIdLst[i], answLst[i], parseInt(answBool[i]));
-    await vocModel.updateHitsScore(answLst[i]);
+  //  await vocModel.updateHitsScore(answLst[i]);
   }
 
-  console.log(uscore)
   res.send({status: "success"});
 })) ;
 
