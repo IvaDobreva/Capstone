@@ -28,8 +28,8 @@ module.exports = {
     return db.getQueryResult(QUERY_GET_ENG);
   },
 
-  updateHitsScore: (kor_word) => {
-    const QUERY_UPDATE_HITS = `UPDATE vocabulary SET hits=hits+1 WHERE kor_word='${kor_word}' ;`;
+  updateHitsScore: (kor_word, eng_word, points) => {
+    const QUERY_UPDATE_HITS = `UPDATE vocabulary SET hits=hits+'${points}' WHERE kor_word='${kor_word}' AND eng_word='${eng_word}' ;`;
     return db.getQueryResult(QUERY_UPDATE_HITS);
   }
 }

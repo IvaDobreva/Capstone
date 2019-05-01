@@ -92,14 +92,27 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
   }
 
   //Delete game session
-//  await gameSession.deleteSession(uid[0]['userID']);
-  console.log(answers)
+  await gameSession.deleteSession(uid[0]['userID']);
+
   //Display results
   res.render('score', {token: "true",
                        score: score[0]['score'],
                        image: images,
                        answer: answers,
                        uans: uans});
+}));
+
+// Update Vocabulary HITS
+router.post('/updateHits', wrapper.asyncMiddleware(async(req, res) => {
+  const rating = req.body.rating.split(',');
+  const kor = req.body.kor.split(',');
+  const eng = req.body.eng.split(',');
+
+  for(let i=0; i<rating.length; i++) {
+    await vocModel.updateHitsScore(kor[i], eng[i], parseInt(rating[i]));
+  }
+
+  res.send({result: "success"});
 }));
 
 router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
