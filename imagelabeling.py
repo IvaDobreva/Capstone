@@ -46,7 +46,7 @@ def img_download():
             img_data = requests.get(image_url).content
             cursor.execute( INSERT_IMAGE, image_name)
             conn.commit()
-            with open('./views/images/'+image_name, 'wb') as handler:
+            with open('./public/images/'+image_name, 'wb') as handler:
                 handler.write(img_data)
                 print("Downloading and saving image file for " + image_name)
 
@@ -70,7 +70,7 @@ def label_img():
     for img in result:
         file_name = os.path.join(
             os.path.dirname(__file__),
-            'views/images/', img[0])
+            'public/images/', img[0])
 
         # Loads the image into memory
         with io.open(file_name, 'rb') as image_file:
