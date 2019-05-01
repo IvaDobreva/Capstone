@@ -29,7 +29,7 @@ CREATE TABLE `game_session` (
   `answer` varchar(45) DEFAULT NULL,
   `ansTrue` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=271 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `game_session` (
 
 LOCK TABLES `game_session` WRITE;
 /*!40000 ALTER TABLE `game_session` DISABLE KEYS */;
+INSERT INTO `game_session` VALUES (291,3,5,'겨울',1),(292,3,1,'거품',0),(293,3,2,'거북이',1),(294,3,5,'겨울',1),(295,3,5,'겨울',1),(296,3,5,'겨울',1),(297,3,3,'개',1),(298,3,1,'거품',0),(299,3,1,'거품',0),(300,3,6,'차',1);
 /*!40000 ALTER TABLE `game_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +105,7 @@ CREATE TABLE `user_game_history` (
   `score` int(11) DEFAULT '0',
   `date` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +114,7 @@ CREATE TABLE `user_game_history` (
 
 LOCK TABLES `user_game_history` WRITE;
 /*!40000 ALTER TABLE `user_game_history` DISABLE KEYS */;
-INSERT INTO `user_game_history` VALUES (22,3,8,'01-05-2019'),(23,3,7,'01-05-2019'),(24,3,8,'01-05-2019');
+INSERT INTO `user_game_history` VALUES (22,3,8,'01-05-2019'),(23,3,7,'01-05-2019'),(24,3,8,'01-05-2019'),(25,3,9,'01-05-2019'),(26,3,7,'01-05-2019'),(27,3,7,'01-05-2019');
 /*!40000 ALTER TABLE `user_game_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +143,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'user1','123','user','emailatgmail.com','UK',0),(2,'SOMENAME','bdej','eweff','feeef','fsefe',0),(3,'iva','123','Iva','somemail ','Bulgaria ',204),(4,'iva2','123','Iva','somemail ','Bulgaria ',0),(5,'undefined','undefined','undefined','undefined','undefined',0),(7,'nnnnn','undefined','undefined','uisbfkj@kjes','undefined',0);
+INSERT INTO `users` VALUES (1,'user1','123','user','emailatgmail.com','UK',0),(2,'SOMENAME','bdej','eweff','feeef','fsefe',0),(3,'iva','123','Iva','somemail ','Bulgaria ',227),(4,'iva2','123','Iva','somemail ','Bulgaria ',0),(5,'undefined','undefined','undefined','undefined','undefined',0),(7,'nnnnn','undefined','undefined','uisbfkj@kjes','undefined',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +173,7 @@ CREATE TABLE `vocabulary` (
 
 LOCK TABLES `vocabulary` WRITE;
 /*!40000 ALTER TABLE `vocabulary` DISABLE KEYS */;
-INSERT INTO `vocabulary` VALUES (1,'거품','foam','middle','n',1,0),(2,'거북이','turtle','middle','n',1,0),(3,'강아지','puppy',NULL,NULL,1,0),(4,'가을 ','fall',NULL,NULL,1,0),(5,'겨울','winter',NULL,NULL,1,0),(6,'차','car','easy','n',1,6),(7,'차동자','car','easy','n',1,0),(9,'개','dog',NULL,'n',1,0),(10,'가을','autumn',NULL,NULL,1,0);
+INSERT INTO `vocabulary` VALUES (1,'거품','foam','middle','n',1,0),(2,'거북이','turtle','middle','n',1,0),(3,'강아지','puppy',NULL,NULL,1,5),(4,'가을 ','fall',NULL,NULL,1,0),(5,'겨울','winter',NULL,NULL,1,5),(6,'차','car','easy','n',1,16),(7,'차동자','car','easy','n',1,0),(9,'개','dog',NULL,'n',1,2),(10,'가을','autumn',NULL,NULL,1,2);
 /*!40000 ALTER TABLE `vocabulary` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-01 16:08:02
+-- Dump completed on 2019-05-01 16:21:43
