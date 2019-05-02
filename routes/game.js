@@ -92,7 +92,7 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
   }
 
   //Delete game session
-  await gameSession.deleteSession(uid[0]['userID']);
+  //await gameSession.deleteSession(uid[0]['userID']);
 
   //Display results
   res.render('score', {token: "true",
