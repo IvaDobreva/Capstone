@@ -15,9 +15,10 @@ bird.screens["game-screen"] = (function () {
   var uansBool = []; //정답 = 1 오답 =0
   var curr_score = 0; //current score
 
+
   function GetImage(count) {
     $.get("/game/getImage")
-      .done(function( data) {
+      .done(function(data) {
         $("#quiz-image").attr("src",data['image']);
         $("#counter").replaceWith("<h3 id=\'counter\'> Quiz : " + count + "/10</h3>");
         count = count + 1;
@@ -28,10 +29,58 @@ bird.screens["game-screen"] = (function () {
 
   GetImage(count);
 
+
+  // 1. 'Keypress Enter' event
+  $("#answer").keypress(function(key) {
+
+    if(key.keyCode == 13){
+      console.log( $('#answer').val() );
+      count = count + 1 ;
+      var ansFlag = false;
+      GetImage(count);
+
+      //check if the answer is right
+      var answer = $('#answer').val();
+      uansw.push(answer);
+      for(var i=0; i < answers.length; i++) {
+        if(answer == answers[i]) {
+          curr_score += 1;
+          ansFlag = true;
+          break;
+        }
+      }
+      if(ansFlag == true ) {
+        uansBool.push(1);
+      } else {
+        uansBool.push(0);
+      }
+
+      $('#answer').val(''); //Clear input field
+      if(count == 10 ) {
+        console.log(curr_score);
+        $.post('/game/score',  {score: curr_score,
+                                hisImage: cards.toString(),
+                                hisAnswer: uansw.toString(),
+                                hisAnsBool: uansBool.toString()},
+            function(result) {
+              console.log(result['status']);
+              if(result['status'] == "success") {
+                window.location = "/game/score";
+              }
+            });
+      }
+
+    }
+  });
+
+
+
+  // 2. 'Click' event
   $('#next_btn').click(function(data){
     count = count + 1 ;
     var ansFlag = false;
     GetImage(count);
+
     //check if the answer is right
     var answer = $('#answer').val();
     uansw.push(answer);
@@ -64,6 +113,8 @@ bird.screens["game-screen"] = (function () {
     }
   });
 
+
+
   function startGame() {
     gameState = {
       level : 0,
@@ -76,21 +127,11 @@ bird.screens["game-screen"] = (function () {
 
 
   function setup() {
-
     /* next 버튼 클릭 */
     dom.bind("#game-screen button.answer", "click", function() {
-
-      /* getImage 구현.
-      $.get("/game/getImage")
-        .done(function(data) {
-          count = count + 1;
-          $("#quiz-image").attr("src",data['image']);
-
-          $("#counter").replaceWith("<h3 id =\"counter\">Quiz : " + count + "/10</h3>")
-          console.log(data['kor']);
-        });*/
     });
   }
+
 
   function updateTimer() {
     gameState.timer = gameState.timer - 1;
