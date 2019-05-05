@@ -1,4 +1,5 @@
 header {
+  margin-top: -40px;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   text-align: center;
@@ -21,7 +22,7 @@ body {
   margin-right: auto;
   margin-top: -30px;
   width: 800px;
-  height: 480px;
+  height: 530px;
   background-color: rgb(10,10,10);
   font-family: Geo;
   color: rgb(200,200,100);
@@ -79,16 +80,4 @@ body {
 
 .no-textshadow .logo {
   filter: dropshadow(color=#000000,offX=3,offY=3);
-}
-
-/* proto공간을 미소 크기로 설정해서, image-size 클래스가 이미지의 실제 크기를 결정하게 되었다. */
-.image-size {
-  font-size : 40px;
-}
-
-#image-proto {
-  position : absolute;
-  width : 1em;
-  height : 1em;
-  left : -1000px;
 }

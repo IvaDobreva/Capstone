@@ -2,10 +2,10 @@
 
 #splash-screen {
   text-align: center;
-  padding-top: 10px;
+  padding-top: 170px;
 }
 
 #splash-screen .continue {
-  cursor: pointer,
+  cursor: pointer;
   font-size: 30px;
 }
