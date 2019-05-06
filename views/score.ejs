@@ -7,21 +7,62 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js" charset="utf-8"></script>
     <script rek="scripts" src="/scripts/rater.js" charset="utf-8"></script>
 <style>
-        body
-        {
-            font-size: 14px;
-            font-family: sans-serif;
-        }
-        .rate-base-layer
-        {
-            color: #aaa;
-        }
-        .rate-hover-layer
-        {
-            color: orange;
-        }
+body{
+    font-size: 14px;
+    font-family: sans-serif;
+    }
 
-    </style>
+.rate-base-layer{
+    color: #aaa;
+    }
+
+.rate-hover-layer{
+    color: orange;
+    }
+
+.title{
+   color: grey;
+   font-size: 18px;
+}
+
+table{
+  width: 50%;
+  margin: 0 auto;
+  font-family: arial;
+  font-size: 17px;
+  color: #000000;
+  border: none;
+  border-collapse: separate;
+  border-spacing: 0px 50px;
+  text-shadow: 0 1px 2px rgb(0,0,0,.3);
+}
+
+td{
+  background: #ffffff;
+  border: none;
+  vertical-align: center;
+  text-align: left;
+  color: #000000;
+}
+
+button{
+  width: 270px;
+  height: 40px;
+  border-width: 0px;
+  border-radius: 3px;
+  background: #1E90FF;
+  cursor: pointer;
+  outline: none;
+  font-family: arial;
+  color: white;
+  font-size: 17px;
+}
+
+button hover{
+  background: #5599FF;
+}
+
+</style>
 </head>
   <body>
     <!--include ejs file like this.-->
@@ -30,26 +71,29 @@
     </header>
 
     <div class="body">
-      <div id="score"> <h3> Your Score is: <%=score%> / 10 <h3> </div>
-      <div> Give Your contribution by evaluating the translation and get more points! </div>
-
-      <table align="center">
+      <h1> Your Score is: <%=score%> / 10 </h1>
+      <p class="title"> Give Your contribution by evaluating the translation and get more points! </p>
+      <table>
         <% for(var i=0; i<10; i++) { %>
-
-          <tr><td><img id="img" align="middle" src= "<%=image[i]%>" width="200" height="200"></td></tr>
-          <tr><td> Possible Answers: </td></tr>
-
+          <tr>
+            <td><img id="img" align="middle" src= "<%=image[i]%>" width="280" height="200"></td>
+            <td>
+              <ul style="list-style-type: none; line-height: 30px">
+                Possible Answers
             <% for(var j=0; j<(answer[i]).length; j++) { %>
-              <tr><td> <%= answer[i][j]['kor_word'] %> <%= answer[i][j]['eng_word']%> </td></tr>
-              <tr><td><div id="rate-<%=i%>-<%=j%>" class="rate"></div></td></tr>
+              <li style="color: grey">Korean: <%= answer[i][j]['kor_word'] %></li>
+              <li style="color: grey">English: <%= answer[i][j]['eng_word']%> </li>
+              <li id="rate-<%=i%>-<%=j%>" class="rate"> </li>
             <% } %>
-          <tr><td>Your Answer: <%= uans[i] %></td> </tr>
-      <% } %>
-      <tr><td>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</td></tr>
-    </table>
+              <li>Your Answer: <%= uans[i] %></li>
+            </ul>
+            </td>
+          </tr>
+          <% } %>
+      </table>
     <button class="submit" id="sbmt" onclick ="" name="Submit">Submit</button>
     </div>
-
+</br></br></br></br>
   </body>
 
   <script>
