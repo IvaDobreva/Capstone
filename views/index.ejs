@@ -16,47 +16,10 @@
     </header>
 
     <div class="body">
-      <div>Hello, We are Bird.<br>Are you interested in Korean?<br>Enjoy game 'Bird Korea'!</div>
       <br>
-      <img id="img" src= "/images/logo.png">
+      <img id="img" src= "/images/logo2.png" width=400px>
     </div>
 
   </body>
-
-  <!-- <script>
-  var count = 0;
-  $(document).ready(function(){
-    $("#next_btn").click(function(data){
-      $.get("/game/getImage")
-        .done(function( data) {
-          $("#img").attr("src",data['image']);
-          $("#img").attr("val", data['kor']);
-          $("#counter").replaceWith("<h3 id=\"counter\">Quiz : " + count + "/200</h3>");
-          count = count + 1;
-          console.log(data['kor']);
-        });
-    });
-  });
-
-  $(document).ready(function(){
-    count = count + 1 ;
-    $("#go_btn").click(function(data){
-      $.post('/game/word',  {word:$("#word_field").val(), image: $('#img').attr("val")},
-        function(data) {
-          console.log("answer: " + data['answer']);
-        });
-
-      //TO DO: Clear input
-      $.get("/game/getImage")
-        .done(function( data) {
-          console.log(data['image']);
-          $("#img").attr("src",data['image']);
-          $("#img").attr("val", data['kor']);
-          $("#counter").replaceWith("<h3 id=\"counter\">Quiz : " + count + "/200</h3>");
-          count = count + 1;
-        });
-    });
-  });
-  </script> -->
 
 </html>

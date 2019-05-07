@@ -7,7 +7,6 @@ bird.screens["game-screen"] = (function () {
   var dom = bird.dom;
 
 
-
   var count = 0; //Counting number of words
   var cards = []; //Here list of answerd images will be kept
   var answers = []; //Available answers
@@ -29,15 +28,13 @@ bird.screens["game-screen"] = (function () {
 
   GetImage(count);
 
-
   // 1. 'Keypress Enter' event
   $("#answer").keypress(function(key) {
 
     if(key.keyCode == 13){
       console.log( $('#answer').val() );
-      count = count + 1 ;
+
       var ansFlag = false;
-      GetImage(count);
 
       //check if the answer is right
       var answer = $('#answer').val();
@@ -69,17 +66,13 @@ bird.screens["game-screen"] = (function () {
               }
             });
       }
-
     }
   });
 
-
-
   // 2. 'Click' event
   $('#next_btn').click(function(data){
-    count = count + 1 ;
+
     var ansFlag = false;
-    GetImage(count);
 
     //check if the answer is right
     var answer = $('#answer').val();
@@ -113,25 +106,15 @@ bird.screens["game-screen"] = (function () {
     }
   });
 
-
-
   function startGame() {
     gameState = {
       level : 0,
       score : 0,
-      timer : 100, // setTimeout 함수가 참조.
+      timer : 2, // Gaming time of one image
       startTime : 0, // 현재 레벨을 시작한 시간.
       endTime : 0, // 게임이 종료될 때까지의 시간.
     };
   }
-
-
-  function setup() {
-    /* next 버튼 클릭 */
-    dom.bind("#game-screen button.answer", "click", function() {
-    });
-  }
-
 
   function updateTimer() {
     gameState.timer = gameState.timer - 1;
@@ -143,11 +126,34 @@ bird.screens["game-screen"] = (function () {
     }
   }
 
+  // Timer function
+  function timer() {
+
+    gameState.timer = gameState.timer - 1;
+    $("#timer").replaceWith("<h2 id=\'timer\'> Left : " + gameState.timer + "</h2>");
+
+    if(gameState.timer === 0) {
+
+      count = count + 1 ;
+      var ansFlag = false;
+      GetImage(count);
+
+      $('#answer').val(''); //Clear input field
+      gameState.timer = 2;
+      $("#timer").replaceWith("<h2 id=\'timer\'> Left : " + gameState.timer + "</h2>");
+
+    }
+
+  }
 
   function run() {
-    //Does not need first run check
+
+    // Initialize game setting $ varible
     startGame();
-    setInterval(updateTimer, 1000 / 10);
+
+    // Timer function call
+    $("#timer").replaceWith("<h2 id=\'timer\'> Left : " + gameState.timer + "</h2>");
+    setInterval(timer, 1000);
   }
 
   return {
