@@ -51,7 +51,7 @@ router.post('/login', wrapper.asyncMiddleware(async(req, res) => {
 
 //Sing up page
 router.get('/signup', (req, res) => {
-  res.render('signup');
+  res.render('signup', {token: "false"});
 });
 
 //REgister a new user
