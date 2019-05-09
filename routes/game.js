@@ -58,7 +58,7 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
   const uid = await session.getUID(token);
 
   const gameHistory = await gameSession.getGameSession(uid[0]['userID']);
-  const score = await userGame.getCurrentScore(uid[0]['userID'], dateFormat(date, "dd-mm-yyyy"));
+  const scoreAll = await userGame.getCurrentScore(uid[0]['userID']);
 
   //Get images and possible answers
   let images = [];
@@ -92,11 +92,12 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
   }
 
   //Delete game session
-  //await gameSession.deleteSession(uid[0]['userID']);
-
+  await gameSession.deleteSession(uid[0]['userID']);
+  console.log(scoreAll);
+  const score = scoreAll[scoreAll.length-1]['score'];
   //Display results
   res.render('score', {token: "true",
-                       score: score[0]['score'],
+                       score: score,
                        image: images,
                        answer: answers,
                        uans: uans});
@@ -132,6 +133,7 @@ router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
   const imageIdLst = req.body.hisImage.split(',');
   const answLst = req.body.hisAnswer.split(',');
   const answBool = req.body.hisAnsBool.split(',');
+  console.log(answBool)
 
   //Update game session table
   for(let i=0; i < 10; i++) {

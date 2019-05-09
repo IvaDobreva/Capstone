@@ -15,63 +15,7 @@ bird.screens["game-screen"] = (function () {
   var curr_score = 0; //current score
 
 
-  function GetImage(count) {
-    $.get("/game/getImage")
-      .done(function(data) {
-        $("#quiz-image").attr("src",data['image']);
-        $("#counter").replaceWith("<h3 id=\'counter\'> Quiz : " + count + "/10</h3>");
-        count = count + 1;
-        answers = data['kor'];
-        cards.push(data['id']);
-      });
-  }
-
-  GetImage(count);
-
-  // 1. 'Keypress Enter' event
-  $("#answer").keypress(function(key) {
-
-    if(key.keyCode == 13){
-      console.log( $('#answer').val() );
-
-      var ansFlag = false;
-
-      //check if the answer is right
-      var answer = $('#answer').val();
-      uansw.push(answer);
-      for(var i=0; i < answers.length; i++) {
-        if(answer == answers[i]) {
-          curr_score += 1;
-          ansFlag = true;
-          break;
-        }
-      }
-      if(ansFlag == true ) {
-        uansBool.push(1);
-      } else {
-        uansBool.push(0);
-      }
-
-      $('#answer').val(''); //Clear input field
-      if(count == 10 ) {
-        console.log(curr_score);
-        $.post('/game/score',  {score: curr_score,
-                                hisImage: cards.toString(),
-                                hisAnswer: uansw.toString(),
-                                hisAnsBool: uansBool.toString()},
-            function(result) {
-              console.log(result['status']);
-              if(result['status'] == "success") {
-                window.location = "/game/score";
-              }
-            });
-      }
-    }
-  });
-
-  // 2. 'Click' event
-  $('#next_btn').click(function(data){
-
+  function answerCheck() {
     var ansFlag = false;
 
     //check if the answer is right
@@ -104,6 +48,36 @@ bird.screens["game-screen"] = (function () {
             }
           });
     }
+  }
+
+  function GetImage() {
+    $.get("/game/getImage")
+      .done(function(data) {
+        $("#quiz-image").attr("src",data['image']);
+        $("#counter").replaceWith("<h3 id=\'counter\'> Quiz : " + count + "/10</h3>");
+        count = count + 1;
+        answers = data['kor'];
+        cards.push(data['id']);
+
+      });
+  }
+
+  GetImage();
+
+  // 1. 'Keypress Enter' event
+  $("#answer").keypress(function(key) {
+
+    if(key.keyCode == 13){
+      console.log( $('#answer').val() );
+
+      answerCheck();
+    }
+  });
+
+  // 2. 'Click' event
+  $('#next_btn').click(function(data){
+
+    answerCheck();
   });
 
   function startGame() {
@@ -133,10 +107,25 @@ bird.screens["game-screen"] = (function () {
     $("#timer").replaceWith("<h2 id=\'timer\'> Left : " + gameState.timer + "</h2>");
 
     if(gameState.timer === 0) {
+      // Empty value and wrong answer passed to the lists
+      uansw.push("");
+      uansBool.push(0);
 
-      count = count + 1 ;
       var ansFlag = false;
-      GetImage(count);
+      GetImage();
+      if(count == 10 ) {
+        console.log(curr_score);
+        $.post('/game/score',  {score: curr_score,
+                                hisImage: cards.toString(),
+                                hisAnswer: uansw.toString(),
+                                hisAnsBool: uansBool.toString()},
+            function(result) {
+              console.log(result['status']);
+              if(result['status'] == "success") {
+                window.location = "/game/score";
+              }
+            });
+      }
 
       $('#answer').val(''); //Clear input field
       gameState.timer = 2;

@@ -8,8 +8,8 @@ module.exports = {
       return db.getQueryResult(QUERY_UPDATE_HISTORY)
     },
 
-    getCurrentScore: (uid, date) => {
-      const QUERY_GET_SCORE = `SELECT score FROM user_game_history WHERE uid='${uid}' AND date='${date}';`;
+    getCurrentScore: (uid) => {
+      const QUERY_GET_SCORE = `SELECT score FROM user_game_history WHERE uid='${uid}';`;
       return db.getQueryResult(QUERY_GET_SCORE);
     }
 }
