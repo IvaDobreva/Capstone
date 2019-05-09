@@ -2,6 +2,113 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <style type="text/css">
+      .about{
+      max-width: 700px;
+      margin: auto;
+      text-align: left;
+      font-family: Arial;
+
+    }
+
+    .team_box{
+      margin-top: 20px;
+      width: 100%;
+    }
+   
+    .team_box ul{
+      overflow: hidden;
+      margin-left: -10px;
+    }
+    
+    .team_box ul li{
+      width: 33.3333%;
+      float: left;
+      padding-left: 10px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    .team_box ul li .card{
+      height: inherit;
+      background: skyblue;
+    }
+
+    .card{
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      max-width: 200px;
+      margin: auto;
+      text-align: center;
+      font-family: arial;
+      float: left;
+    }
+     
+     .title{
+      color: grey;
+      font-size: 16px;
+     }
+    
+     .intro{
+      font-size: 20px;
+     }
+
+     table{
+      width: 100%;
+      margin: 0 auto;
+      font-family: arial;
+      font-size: 17px;
+      color: #000000;
+      border: none;
+      border-collapse: separate;
+      border-spacing: 0px 50px;
+      text-shadow: 0 1px 2px rgb(0,0,0,.3);
+}
+
+   td{
+      background: #ffffff;
+      border: none;
+      vertical-align: center;
+      text-align: left;
+      color: #000000;
+}
+
+.contact{
+  float: left;
+  width: 35%;
+  margin-top: 6px;
+  padding: 20px;
+}
+
+input[type=text], select, textarea{
+   width: 100%;
+   padding: 12px;
+   border: 1px solid #ccc;
+   margin-top: 6px;
+   margin-bottom: 16px;
+   resize: vertical;
+}
+
+input[type=submit]{
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer; 
+}
+
+input[type=submit]: hover{
+  background-color: #45a049;
+}
+
+.rewarded{
+  float: right;
+  width: 35%;
+  margin-top: 6px;
+  padding: 20px;
+}
+
+
+  </style>
   </head>
   <body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -9,11 +116,82 @@
     <header>
       <% include templates/header.ejs %>
     </header>
-    <p> Who are we? </p>
-      <div>내-용 </div>
-    <p> Help us </p>
-       <div>내-용 </div>
-    <p> Get Rewarded </p>
-      <div>내-용 </div>
+    <div class="about">
+      <h1>About</h1>
+      <p class="intro">
+        Little and fun client oriented web application, that is going to use different methods such as deep learning, image recognition and crowdsourcing in order to create better and accurate language models, that can be used in translators and different applications that needs language trained neural network. 
+      </p></br>
+      <h1> Who are we? </h1></br></br>
+      <div class="team_box">
+        <ul style="list-style-type: none; line-height: 30px">
+          <li>
+            <div class="card">
+            <img src="/images/prof.png", alt="team1" style="width: 100%">
+            <h3>June Hwang</h3>
+            <p class="title"> major: computer science</p>
+            <p>Yonsei University</p>
+            </div>
+          </li>
+          <li>
+            <div class="card">
+            <img src="/images/prof.png", alt="team2" style="width: 100%">
+            <h3>Iva Dobreva</h3>
+            <p class="title"> major: computer science</p>
+            <p>Yonsei University</p>
+            </div>
+          </li>
+          <li>
+            <div class="card">
+            <img src="/images/prof.png", alt="team3" style="width: 100%">
+            <h3>Meiling Wen</h3>
+            <p class="title"> major: computer science</p>
+            <p>Yonsei University</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="profe">
+        <table>
+          <tr>
+            <td>
+              <img src="/images/prof.png", alt="professor" style="width: 100%">
+            </td>
+            <td colspan="1">
+              <ul style="list-style-type: none; line-height: 30px">
+                <li>Professor: Bernd Burgstaller</li>
+                <li>Subject: Image Association Korean Education Program</li>
+                <li>Semester: 2019-2 capstone</li>
+                <li>Yonsei University</li>
+            </td>
+          </tr>
+        </table>
+      </div>
+      
+      
+      <div class="contact">
+        <form action="#">
+            <h1> Contact us </h1>
+            <label>First name</label>
+            <input type="text" name="firstname" id="fname">
+            <label>Last name</label>
+            <input type="text" name="lastname" id="lname">
+            <label>Country</label>
+            <select id="country" name="country">
+            <option value="U.S.A">U.S.A</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+            <option value="China">China</option>
+        </select>
+        <label>Subject</label>
+        <textarea id="subject" name="subject" placeholder="Write something.." style="height: 170px"></textarea>
+        <input type="submit" value="Submit">
+        </form>
+      </div>
+
+    
+      <div class="rewarded">
+        <h1> Get Rewarded </h1>
+        <p style="font-size: 16px">Little and fun client oriented web application, that is going to use different methods such as deep learning, image recognition and crowdsourcing in order to create better and accurate language models, that can be used in translators and different applications that needs language trained neural network. </p>
+      </div>
   </body>
 </html>
