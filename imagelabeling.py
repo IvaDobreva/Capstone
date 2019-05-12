@@ -113,5 +113,59 @@ def linkimage():
 
     return str(image_url)
 
+@app.route('/linkimage/label', methods=['POST'])
+def label():
+    ADD_VOCAB = "INSERT INTO vocabulary(kor_word, eng_word) VALUES (%s, %s);"
+    MARK_VOCAB = "UPDATE vocabulary SET processed = 1 WHERE kor_word = %s;"
+    INSERT_IMAGE = "INSERT INTO image (imgname) VALUES (%s);"
+    UPDATE_LABELS = "UPDATE image SET labels=\"%s\" WHERE imgname='%s';"
+
+    eng = request.form.get('eng')
+    kor = request.form.get('kor')
+    url = request.form.get('url')
+    image_name = request.form.get('eng')
+    if request.method == 'POST':
+        img_data = requests.get(url).content
+        cursor.execute( INSERT_IMAGE, image_name)
+        conn.commit()
+        with open('./public/images/'+image_name, 'wb') as handler:
+            handler.write(img_data)
+            print("Downloading and saving image file for " + image_name)
+
+        #insert new word in vocabulary db
+        cursor.execute(ADD_VOCAB, (kor, eng))
+        conn.commit()
+
+        #mark the word as processed
+        cursor.execute(MARK_VOCAB, kor)
+        conn.commit()
+        print("hi")
+
+        # Instantiates a client
+        client = vision.ImageAnnotatorClient()
+
+        # The name of the image file to annotate
+
+        file_name = os.path.join(os.path.dirname(__file__), 'public/images/', image_name)
+
+        # Loads the image into memory
+        with io.open(file_name, 'rb') as image_file:
+            content = image_file.read()
+            image = types.Image(content=content)
+
+        # Performs label detection on the image file
+        response = client.label_detection(image=image)
+        labels = response.label_annotations
+
+        label_list = []
+        print('Labels:')
+        for label in labels:
+            label_list.append(label.description)
+            print(label.description)
+
+        cursor.execute(UPDATE_LABELS % (','.join(label_list), image_name))
+        conn.commit()
+    return "done"
+
 if __name__ == "__main__":
     app.run(port=3001, debug=True)
