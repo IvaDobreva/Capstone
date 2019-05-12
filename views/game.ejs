@@ -14,27 +14,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Bootstrap finish -->
 
-    <!-- countdown function -->
-    <!-- <script type="text/javascript">
-      function countDown(secs, elem) {
-        var element = document.getElementById(elem);
-        element.innerHTML = "<h2>Left : " + secs + "</h2>";
-        if(secs < 1){
-          clearTimeout(timer); // Stop timer
-          element.innerHTML = '<h3>Complete!</h3>';
-          element.innerHTML += '<a href="#">Click here now</a>';
-        }
-
-        secs--;
-        // setTimeout is special function that do execute a function in some interval
-        var timer = setTimeout('countDown('+secs+', "'+elem+'")', 1000);
-      }
-    </script> -->
-
 
     <link rel='stylesheet' href='stylesheets/splash-screen.css'>
     <link rel='stylesheet' href='stylesheets/main-menu.css'>
     <link rel='stylesheet' href='stylesheets/game-screen.css'>
+    <link rel='stylesheet' href='stylesheets/ranking-screen.css'>
   </head>
 
 
@@ -44,31 +28,64 @@
       <% include templates/header.ejs %>
     </header>
 
-    <!-- 현재 어째서 splash-screen 만 표현이 되고 있을까요?? -->
+
     <div id="game">
 
 
       <div class='background'></div>
 
-      <!-- 스플래시 화면 html -->
+      <!-- 1. 스플래시 화면 html -->
       <div class="screen" id="splash-screen">
         <h1 class="logo1">Bird</h1>
         <h1 class="logo2">Korea</h1>
         <span>계속하려면 클릭하세요.</span>
       </div>
 
-      <!-- 메인메뉴 화면 html -->
+      <!-- 2. 메인메뉴 화면 html -->
       <div class="screen" id="main-menu">
         <h1 class="logo1">Bird</h1>
         <h1 class="logo2">Korea</h1>
         <ul class="menu">
           <li><button name="game-screen">START</button></li>
-          <li><button name="score-screen">SCORE</button></li>
+          <li><button name="ranking-screen">RANKING</button></li>
         </ul>
       </div>
 
+      <!-- 3. User's score page -->
+      <div class="screen" id="ranking-screen">
+        <br><br>
+        <h1 class="logo1">Ranking</h1>
+        <table id="ranking" border="1" bordercolor="blue" width ="500" height="300" align = "center">
+        	<th>User</th>
+        	<th>Level</th>
+          <th>Total Score</th>
+          <th>Contribution</th>
+          <th>Nation</th>
+        	<tr>
+      	    <td>Bruce</td>
+      	    <td>100</td>
+            <td>10000</td>
+            <td>10000</td>
+            <td>Austria</td>
+        	</tr>
+        	<tr>
+            <td>Mari</td>
+            <td>90</td>
+            <td>9000</td>
+            <td>9000</td>
+            <td>Austria</td>
+        	</tr>
+          <tr>
+            <td>Goodman</td>
+            <td>80</td>
+            <td>8000</td>
+            <td>8000</td>
+            <td>Austria</td>
+        	</tr>
+        </table>
+      </div>
 
-      <!-- 게임 화면 -->
+      <!-- 4. 게임 화면 -->
       <div class="screen" id="game-screen">
 
         <div class="image-board">

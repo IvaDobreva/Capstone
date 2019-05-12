@@ -14,7 +14,7 @@ bird.game = (function() {
     // $이 Sizzle.
     // screen 에는 해당 html 코드가 통째로 들어간다.
     var screen = $("#" + screenId)[0];
-    
+
     if (activeScreen) {
       dom.removeClass(activeScreen, "active");
     }

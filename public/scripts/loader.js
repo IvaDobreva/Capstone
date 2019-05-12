@@ -28,6 +28,7 @@ window.addEventListener("load", () => {
         "scripts/game.js", //시작할때 game.js 로드된다.
         "scripts/screen.splash.js",
         "scripts/screen.main-menu.js",
+        "scripts/screen.ranking.js",
         "scripts/screen.game.js",
 
         "scripts/board.js",
