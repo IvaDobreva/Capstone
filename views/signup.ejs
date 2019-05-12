@@ -5,7 +5,134 @@
     <meta charset="UTF-8">
     <title>register</title>
     <link rel='stylesheet' href='/stylesheets/main.css'>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/signup.css">
+    <style type="text/css">
+      body{
+    /*background-image: url("/images/back.jpg");*/
+    -webkit-background-size: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+
+#register_frame{
+    width: 450px;
+    height: 330px;
+    padding: 13px;
+    margin: auto;
+    
+    background-color: #EAEAEA;
+
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    font-family: Arial;
+
+}
+
+form p> *{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+h1{
+    margin-top: 22px;
+}
+
+.label_register{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+    width: 105px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: white;
+    background-color: #4C4C4C;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.text_register{
+    width: 278px;
+    height: 28px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 0;
+}
+
+#wt_register{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #4C4C4C;
+    border-radius: 6px;
+    border: 0;
+
+    float: left;
+}
+#cancel{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color:white;
+    background-color: #4C4C4C;
+    border-radius: 6px;
+    border: 0;
+
+    float: left;
+}
+
+
+
+#register_control{
+    padding: 0 58px;
+}
+#register_control p{
+   vertical-align: center;
+}
+
+    </style>
+    <script type="text/javascript">
+      function validate_form(thisform){
+      with(thisform){
+        if (validate_required(username, "Please enter your user name!") == false) {
+          username.focus();
+          return false;
+        }else if(validate_required(pass, "Please enter your password!") == false){
+          pass.focus();
+          return false;
+        }else if(validate_required(country, "Please enter your country!") == false){
+          country.focus();
+          return false;
+        }else if(validate_required(email, "Please enter your email!") == false){
+          email.focus();
+          return false;
+        }
+      }
+
+     }
+
+     function validate_required(field, alerttxt){
+      with(field){
+        if (value==null || value=="") {
+          alert(alerttxt);
+          return false;
+        }else{
+          return true;
+        }
+      }
+
+     }
+    </script>
 </head>
 
 <body>
@@ -15,14 +142,15 @@
 
   <div id="register_frame">
       <p><h1> Sign Up </h1></p>
-      <form enctype="application/x-www-form-urlencoded" method="post" action="/signup">
+      <hr>
+      <form enctype="application/x-www-form-urlencoded" method="post" action="/signup" onsubmit="return validate_form(this)">
           <p>
               <label class="label_register">username</label>
-          <input type="text" id="username" name="username" class="text_register" />
+          <input type="text" id="username" name="username" class="text_register" placeholder="Enter user name" required/>
           </p>
           <p>
               <label class="label_register">password</label>
-          <input type="password" id="pass" name="pass" class="text_register" />
+          <input type="password" id="pass" name="pass" class="text_register" placeholder="Enter password" required/>
           </p>
           <p>
               <label class="label_register">country</label>
@@ -34,9 +162,13 @@
           </p>
 
       <div id="register_control">
-          <p>
-          <input type="submit" id="wt_register" value="Sign Up">
-          <input type="reset" id="cancel" value="cancel">
+          <table align="center">
+            <tr>
+              <td><input type="submit" id="wt_register" value="Sign Up"></td>
+              <td><input type="reset" id="cancel" value="cancel"></td>
+            </tr>
+          </table>
+          
           </p>
       </div>
       </form>

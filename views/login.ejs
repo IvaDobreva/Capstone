@@ -4,12 +4,140 @@
     <meta charset="UTF-8">
     <title>log in</title>
     <link rel='stylesheet' href='/stylesheets/main.css'>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/login.css">
     <script type="text/javascript">
      function register() {
          location.href="/register";
      }
+
+     function validate_form(thisform){
+      with(thisform){
+        if (validate_required(username, "Please enter your user name!") == false) {
+          username.focus();
+          return false;
+        }else if(validate_required(pass, "Please enter your password!") == false){
+          pass.focus();
+          return false;
+        }
+      }
+
+     }
+
+     function validate_required(field, alerttxt){
+      with(field){
+        if (value==null || value=="") {
+          alert(alerttxt);
+          return false;
+        }else{
+          return true;
+        }
+      }
+
+     }
+
+
     </script>
+    <style type="text/css">
+      body{
+    /* background-image: url("/images/back.jpg"); */
+    -webkit-background-size: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+
+#login_frame{
+    width: 400px;
+    height: 260px;
+    padding: 13px;
+    margin:auto; 
+
+    background-color: #EAEAEA;
+
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    font-family: Arial;
+}
+
+form p> *{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#image_logo{
+    margin-top: 22px;
+}
+
+.label_log{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+    width: 65px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: white;
+    background-color: #4C4C4C;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.text_field{
+    width: 278px;
+    height: 28px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 0;
+}
+
+#btn_login{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #4C4C4C;
+    border-radius: 6px;
+    border: 0;
+
+    float: left;
+}
+#btn_register{
+    font-size: 14px;
+    font-family: ".SF NS Text";
+
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #4C4C4C;
+    border-radius: 6px;
+    border: 0;
+    float: left;
+    
+}
+
+#forget_pwd{
+    font-size: 12px;
+    color: #8C8C8C;
+    text-decoration: none;
+    float: right;
+    top: 5px;
+}
+
+#forget_pwd:hover{
+    color: dodgerblue;
+    text-decoration: underline;
+}
+
+#login_control{
+    padding: 0 28px;
+}
+</style>
 </head>
 
 <body>
@@ -19,8 +147,9 @@
   </header>
 
   <div id="login_frame">
-      <p><h1>log in</h1></p>
-      <form  method="post" action="/login">
+      <h1>log in</h1>
+      <hr>
+      <form  method="post" action="/login" onsubmit="return validate_form(this)">
           <p>
               <label class="label_log">user</label>
               <input type="text" id="username" name="username" class="text_field" />
@@ -30,9 +159,13 @@
               <input type="text" id="pass" name="pass" class="text_field" />
           </p>
       <div id="login_control">
-          <input type="submit" id="btn_login" value="log in">
-          <input type="button" id="btn_register" value="register" onclick="register()">
-          <a href="forget_pwd" id="forget_pwd" src="/pw_found">forget password?</a>
+        <table>
+          <tr>
+          <td colspan="1"><input type="submit" id="btn_login" value="log in"></td>
+          <td colspan="1"><input type="button" id="btn_register" value="register" onclick="register()"></td>
+          <td colspan="2"><a href="forget_pwd" id="forget_pwd" src="/pw_found"><p style="font-size: 13px">forget password?</p></a></td>
+        </tr>
+        </table>
       </div>
       </form>
   </div>
