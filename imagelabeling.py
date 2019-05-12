@@ -1,4 +1,6 @@
 from flask import Flask
+from flask import request
+from flask_cors import CORS
 from flaskext.mysql import MySQL
 import requests
 import sys
@@ -12,6 +14,7 @@ from google.cloud import vision
 from google.cloud.vision import types
 
 app = Flask(__name__)
+CORS(app)
 
 mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
@@ -91,6 +94,24 @@ def label_img():
         cursor.execute(UPDATE_LABELS % (','.join(label_list), img[0]))
         conn.commit()
     return str(label_list)
+
+@app.route('/linkimage', methods=['POST'])
+def linkimage():
+    if request.method == 'POST':
+     kor = request.form.get('kor')
+     eng = request.form.get('eng')
+
+     params = {'key':'AIzaSyC4lzrt7WjTncucg0-r5yccKuqyYns1qjo', 'cx':'012017168918701040843:itxhwhoxuss', 'q':kor, 'searchType':'image', 'num':10}
+     response = requests.get('https://www.googleapis.com/customsearch/v1', params=params)
+
+     #save the image locally and update DB (image table)
+     image_url = []
+     image = response.json()['items']#[0]['link']
+     for i in image:
+         image_url.append(i['link'])
+         print(i['link'])
+
+    return str(image_url)
 
 if __name__ == "__main__":
     app.run(port=3001, debug=True)

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='/stylesheets/main.css'>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+    /* The grid: Four equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 25%;
+  padding: 10px;
+}
+
+/* Style the images inside the grid */
+.column img {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.column img:hover {
+  opacity: 0.5;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+    </style>
+  </head>
+  <body>
+    <header>
+      <% include templates/header.ejs %>
+    </header>
+    <div class="body">
+        <input id="kor">
+        <input id="eng">
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="getImages()">
+        Next
+      </button>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body" class="row" id="cards"  >
+          <div class="column"><img id="0" src=""></div>
+          <div class="column"><img id="1" src=""></div>
+          <div class="column"><img id="2" src=""></div>
+          <div class="column"><img id="3" src=""></div>
+          <div class="column"><img id="4" src=""></div>
+          <div class="column"><img id="5" src=""></div>
+          <div class="column"><img id="6" src=""></div>
+          <div class="column"><img id="7" src=""></div>
+          <div class="column"><img id="8" src=""></div>
+          <div class="column"><img id="9" src=""></div>
+        </div>
+      </div>
+    <div id="pic-btn" class="invisible" visibility="hidden"><input class="btn btn-primary" type="submit" value="Submit" onclick="submitImg()"></div>
+    </div>
+
+
+  </body>
+  <script type="text/javascript">
+    var imgRes;
+    var kor;
+    var eng;
+    $('#myCollapsible').on('show.bs.collapse', function () {
+
+    })
+
+    function getImages() {
+      kor = $("#kor").val();
+      eng = $("#eng").val();
+
+      $.post("http://127.0.0.1:5001/linkimage", {'kor': kor, 'eng': eng}, function(data) {
+        data=data.replace("[", "");
+        data=data.replace("]", "");
+        data=data.split(',');
+        for(var i=0; i<data.length; i++) {
+          $("#"+i).replaceWith("<img class=\"click\" id=\""+i+"\" class=\"img-thumbnail\" class=\"img-responsive\" float=left width=200 height=200 src=" + data[i] + ">");
+        }
+      })
+    }
+
+
+      $('.column').click(function(){
+        imgRes = $(this).children()[0];
+        console.log(imgRes.src);
+        $("#pic-btn").attr("class", "visible");
+        $("#pic-btn").attr("visibility", "visible");
+      });
+
+      //Show a pop up window with thank you message
+    function submitImg() {
+      console.log(imgRes);
+      $.post('/word/new', {'kor': kor, 'eng': eng, 'html':imgRes.toString()}, function(data) {
+        if(data['result'] == 'done') {
+          window.location = "/";
+        }
+      });
+    }
+  </script>
+</html>

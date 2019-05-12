@@ -26,4 +26,13 @@ router.post('/', wrapper.asyncMiddleware(async(req, res) => {
   res.send({result: 'new entry added'});
 }));
 
+
+router.get('/new', wrapper.asyncMiddleware(async(req, res) => {
+  res.render('newWord', {token: "true"});
+}));
+
+router.post('/new', wrapper.asyncMiddleware(async(req, res) => {
+  console.log(req.body)
+  res.send({result: "done"})
+}));
 module.exports = router;
