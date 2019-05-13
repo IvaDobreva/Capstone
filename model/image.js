@@ -22,5 +22,10 @@ module.exports = {
   getImage: (id) => {
     const QUERY_GET_BY_ID = `SELECT imgname FROM image WHERE id='${id}';`;
     return db.getQueryResult(QUERY_GET_BY_ID);
+  },
+
+  getImgLab: (id) => {
+    const QUERY_GET_BY_ID = `SELECT * FROM image WHERE id='${id}';`;
+    return db.getQueryResult(QUERY_GET_BY_ID);
   }
 }
