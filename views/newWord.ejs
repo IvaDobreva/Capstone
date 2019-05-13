@@ -179,8 +179,8 @@ button:after {
     function submitImg() {
       console.log(imgRes);
       $.post('http://127.0.0.1:5001/linkimage/label', {'url': imgRes.src, 'eng': eng, 'kor': kor}, function() {
-          window.location = "/";
-        
+          window.location = "/map";
+
       });
     }
   </script>
