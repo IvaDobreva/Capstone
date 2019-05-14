@@ -57,15 +57,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <link rel='stylesheet' href='/stylesheets/main.css'>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/main.css'>
+    <link rel='stylesheet' href='/stylesheets/map.css'>
+
     <style type="text/css">
     <style>
       html {height:100%;}
       body {height: 100%;}
-      #sigma-container {margin:auto; border: black; width:900px; height:500px; background-color: grey; position:absolute; top:50; align-items: center;}
+      #sigma-container {border: black; width:900px; height:500px; background-color: grey; }
       .sigma-scene, .sigma-labels, .sigma-mouse {
-        left: 0;
+        left: 200px;
       }
     </style>
   </head>
@@ -87,15 +90,13 @@
       </div>
     </div>
 
-    <div class="body">
-    <div id='sigma-container'></div>
+    <div class="map" style="display:inline-block; text-align:center;">
+      <div id='sigma-container'></div>
     </div>
 
     <script>
-
       function graph(images, targetId) {
         sigma.utils.pkg('sigma.canvas.nodes');
-
         // generate a  graph
         var i,
             s,
@@ -112,7 +113,6 @@
               '#c6583e',
               '#b956af'
             ];
-
         //Generate nodes and edges
         for (i = 0; i <images.length; i++) {
           var coordX = Math.random();
@@ -132,24 +132,19 @@
             size: 1,
             color: colors[Math.floor(Math.random() * colors.length)]
           };
-
           node.image = {
             url:'images/'+images[i]['eng'],
             clip:  node.innerRatio *0.95,
             scale: node.innerRatio *1.2
           };
-
           var edge = {
             id: 'e'+images[i]['id'],
             source: images[i]['id'],
             target: targetId
           };
-
           g.nodes.push(node);
           g.edges.push(edge);
         }
-
-
         s = new sigma({
           graph: g,
           renderer: {
@@ -167,7 +162,6 @@
         CustomShapes.init(s);
         // Initialize the dragNodes plugin:
         var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
-
         dragListener.bind('startdrag', function(event) {
           console.log(event);
         });
@@ -181,14 +175,10 @@
           console.log(event);
         });
         s.refresh();
-
-
       }
-
       $('#new-word').click(function() {
         window.location.href = "word/new";
       });
-
       $('.dropdown-item').click(function() {
         var category = $(this)[0].id;
         $.post('map/category', {'cat': category}, function(data) {
@@ -197,7 +187,6 @@
         });
         console.log($(this)[0].id);
       });
-
     </script>
 
   </body>
