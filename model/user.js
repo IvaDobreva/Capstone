@@ -41,10 +41,11 @@ module.exports = {
   },
 
   getAllUsersRanking: () => {
-    const GET_RANKING = `SELECT id, name, score, FIND_IN_SET( score, (
+    const GET_RANKING = `SELECT username, score, nationality, FIND_IN_SET( score, (
                         SELECT GROUP_CONCAT( score ORDER BY score DESC )
-                        FROM scores )) AS 'rank'
-                        FROM users;`
+                        FROM users )) AS 'rank'
+                        FROM users
+                        ORDER BY score DESC;`
     return db.getQueryResult(GET_RANKING);
   }
 }

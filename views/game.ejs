@@ -56,32 +56,20 @@
         <br><br>
         <h1 class="logo1">Ranking</h1>
         <table id="ranking" border="1" bordercolor="blue" width ="500" height="300" align = "center">
-        	<th>User</th>
-        	<th>Level</th>
+        	<th>Rank</th>
+          <th>User</th>
           <th>Total Score</th>
           <th>Contribution</th>
           <th>Nation</th>
-        	<tr>
-      	    <td>Bruce</td>
-      	    <td>100</td>
-            <td>10000</td>
-            <td>10000</td>
-            <td>Austria</td>
-        	</tr>
-        	<tr>
-            <td>Mari</td>
-            <td>90</td>
-            <td>9000</td>
-            <td>9000</td>
-            <td>Austria</td>
-        	</tr>
-          <tr>
-            <td>Goodman</td>
-            <td>80</td>
-            <td>8000</td>
-            <td>8000</td>
-            <td>Austria</td>
-        	</tr>
+          <% for(var i=0; i<ranking.length; i++) {%>
+            <tr>
+              <td><%=ranking[i]['rank']%></td>
+              <td><%=ranking[i]['username']%></td>
+              <td><%=ranking[i]['score']%></td>
+              <td>-</td>
+              <td><%=ranking[i]['nationality']%></td>
+            </tr>
+          <%}%>
         </table>
       </div>
 

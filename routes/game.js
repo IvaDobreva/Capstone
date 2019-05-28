@@ -13,7 +13,7 @@ const session = require('../model/sessions');
 const gameSession = require('../model/gameSession');
 const userGame = require('../model/userGame');
 
-router.get('/', (req, res) => {
+router.get('/', wrapper.asyncMiddleware(async(req, res) => {
   if(req.headers.cookie == undefined) {
     res.render('game', {token: 'false'})
   }
@@ -21,8 +21,11 @@ router.get('/', (req, res) => {
     res.render('game', {token: "false"});
   }
 
-  res.render('game', {token: "true"});
-});
+  const ranking = await userModel.getAllUsersRanking();
+  console.log(ranking);
+  res.render('game', {token: "true",
+                      ranking: ranking});
+}));
 
 //Get random image from the DB
 router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
