@@ -24,6 +24,7 @@ router.get('/', (req, res) => {
   res.render('game', {token: "true"});
 });
 
+//Get random image from the DB
 router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
   //Get random image by selecting random number from
   const rows = await imageModel.getTotalRows();
@@ -32,7 +33,6 @@ router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
   //Get labels
   const labels = randImg[0]['labels'].split(",");
   const vocab = await vocModel.getVocab(randImg[0]['imgname']);
-  console.log(vocab);
 
   //Get korean translation for every label
   const kor = [];
@@ -51,7 +51,6 @@ router.get('/getImage', wrapper.asyncMiddleware(async(req, res) => {
 
 //Update users score after the game ends
 router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
-  const date = new Date();
 
   //Get game history
   const token = cookies.parse(req.headers.cookie)['token'];
@@ -93,7 +92,7 @@ router.get('/score', wrapper.asyncMiddleware(async(req, res) => {
 
   //Delete game session
   await gameSession.deleteSession(uid[0]['userID']);
-  console.log(scoreAll);
+
   const score = scoreAll[scoreAll.length-1]['score'];
   //Display results
   res.render('score', {token: "true",
@@ -116,6 +115,7 @@ router.post('/updateHits', wrapper.asyncMiddleware(async(req, res) => {
   res.send({result: "success"});
 }));
 
+//Update score
 router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
   const token = cookies.parse(req.headers.cookie)['token'];
   const uscore = req.body.score;
@@ -128,12 +128,11 @@ router.post('/score', wrapper.asyncMiddleware(async(req, res) => {
   await userModel.updateScore(uid[0]['userID'], totalScore);
 
   //Add a record to the played games history
-  const date = new Date();
-  await userGame.updateGameHistory(uid[0]['userID'], parseInt(uscore), dateFormat(date, "dd-mm-yyyy"));
+  const timestamp = new Date();
+  await userGame.updateGameHistory(uid[0]['userID'], parseInt(uscore), dateFormat(timestamp, "dd-mm-yyyy HH:mm:ss"));
   const imageIdLst = req.body.hisImage.split(',');
   const answLst = req.body.hisAnswer.split(',');
   const answBool = req.body.hisAnsBool.split(',');
-  console.log(answBool)
 
   //Update game session table
   for(let i=0; i < 10; i++) {

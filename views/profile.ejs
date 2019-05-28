@@ -77,34 +77,15 @@
     <div id="content2">
       <table id="detail">
         <tr>
-          <th>rank</th>
-          <th>level</th>
           <th>score</th>
           <th>Date</th>
         </tr>
+        <% for(var i=0; i<score.length; i++) { %>
+          <tr><td><%=score[i]['score']%></td> <td><%=score[i]['date']%></td> </tr>
+        <%}%>
       </table>
         <script>
-          var data =[
-                  ['1', 'median', '97','2019-03-28'],
-                  ['13', 'median', '83','2019-03-23'],
-                  ['4', 'median', '93','2019-03-26']
-                  ]
-          var rank, level, score, date;
 
-          for(var i=0; i < data.length; i++){
-            var tb = document.getElementById('detail').insertRow(-1);
-            rank = tb.insertCell(0);
-            level = tb.insertCell(1);
-            score = tb.insertCell(2);
-            date = tb.insertCell(3);
-
-            var item = data[i];
-              rank.innerHTML = item[0];
-              level.innerHTML = item[1];
-              score.innerHTML = item[2];
-              date.innerHTML = item[3];
-
-          }
         </script>
     </div>
   </br></br></br>

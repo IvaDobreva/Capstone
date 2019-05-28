@@ -9,7 +9,12 @@ module.exports = {
     },
 
     getCurrentScore: (uid) => {
-      const QUERY_GET_SCORE = `SELECT score FROM user_game_history WHERE uid='${uid}';`;
-      return db.getQueryResult(QUERY_GET_SCORE);
+      const QUERY_GET_SCORE_BY_TIME = `SELECT score FROM user_game_history WHERE uid='${uid}';`;
+      return db.getQueryResult(QUERY_GET_SCORE_BY_TIME);
+    },
+
+    getUserScoreHistory: (uid) => {
+      const QUERY_GET_SCORE_BY_ID = `SELECT * FROM user_game_history WHERE uid='${uid}';`;
+      return db.getQueryResult(QUERY_GET_SCORE_BY_ID)
     }
 }

@@ -9,6 +9,7 @@ const cGen = require('../payload-gen');
 const wrapper = require('../model/wrapper');
 const userModel = require('../model/user');
 const session = require('../model/sessions');
+const uGameHis = require('../model/userGame');
 
 router.get('/login', wrapper.asyncMiddleware(async(req, res) => {
   res.render('login', {token: 'false'});
@@ -79,6 +80,7 @@ router.get('/logout', wrapper.asyncMiddleware(async(req, res) => {
   res.redirect('/');
 }));
 
+//User profile page
 router.get('/users/profile', wrapper.asyncMiddleware(async(req, res) => {
 
   if(req.headers.cookie == undefined){
@@ -88,9 +90,12 @@ router.get('/users/profile', wrapper.asyncMiddleware(async(req, res) => {
   const token = cookies.parse(req.headers.cookie)['token'];
   const uid = await session.getUID(token);
   const uprofile = await userModel.getUserData(uid[0]['userID']);
+  const uscore = await uGameHis.getUserScoreHistory(uid[0]['userID']);
 
+  console.log(uscore);
   res.render('profile', {token: "true",
-                        user: uprofile[0]});
+                         user: uprofile[0],
+                         score: uscore});
 }));
 
 module.exports = router;
