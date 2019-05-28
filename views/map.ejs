@@ -66,7 +66,7 @@
     <style>
       html {height:100%;}
       body {height: 100%;}
-      #sigma-container {border: black; width:900px; height:500px; background-color: grey; }
+      #sigma-container {border: black; width:900px; height:500px; background-color: white; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); }
       .sigma-scene, .sigma-labels, .sigma-mouse {
         left: 200px;
       }
@@ -101,8 +101,6 @@
         var i,
             s,
             img,
-            N = 100,
-            E = 500,
             g = {
               nodes: [],
               edges: []
@@ -140,7 +138,8 @@
           var edge = {
             id: 'e'+images[i]['id'],
             source: images[i]['id'],
-            target: targetId
+            target: targetId,
+            size: 1
           };
           g.nodes.push(node);
           g.edges.push(edge);
@@ -155,8 +154,9 @@
             type: 'canvas'
           },
           settings: {
-            minNodeSize: 8,
-            maxNodeSize: 16,
+            minNodeSize: 10,
+            maxNodeSize: 50,
+            maxEdgeSize: 5
           }
         });
         CustomShapes.init(s);
