@@ -91,11 +91,13 @@ router.get('/users/profile', wrapper.asyncMiddleware(async(req, res) => {
   const uid = await session.getUID(token);
   const uprofile = await userModel.getUserData(uid[0]['userID']);
   const uscore = await uGameHis.getUserScoreHistory(uid[0]['userID']);
+  const rank = await userModel.getRankByID(uid[0]['userID']);
 
-  console.log(uscore);
+  console.log(rank);
   res.render('profile', {token: "true",
                          user: uprofile[0],
-                         score: uscore});
+                         score: uscore,
+                         rank: rank[0]['rank']});
 }));
 
 module.exports = router;

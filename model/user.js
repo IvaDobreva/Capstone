@@ -31,5 +31,20 @@ module.exports = {
   getScore: (uid) => {
     const QUERY_GET_SCORE = `SELECT score FROM users WHERE id='${uid}';`;
     return db.getQueryResult(QUERY_GET_SCORE);
+  },
+
+  getRankByID: (uid) => {
+    const GET_RANKING_BY_ID = `SELECT username, score,
+                              FIND_IN_SET( score, (SELECT GROUP_CONCAT( score ORDER BY score DESC )
+                              FROM users )) AS 'rank' FROM users WHERE id='${uid}'`
+    return db.getQueryResult(GET_RANKING_BY_ID);
+  },
+
+  getAllUsersRanking: () => {
+    const GET_RANKING = `SELECT id, name, score, FIND_IN_SET( score, (
+                        SELECT GROUP_CONCAT( score ORDER BY score DESC )
+                        FROM scores )) AS 'rank'
+                        FROM users;`
+    return db.getQueryResult(GET_RANKING);
   }
 }
