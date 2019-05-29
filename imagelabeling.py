@@ -101,7 +101,7 @@ def linkimage():
      kor = request.form.get('kor')
      eng = request.form.get('eng')
 
-     params = {'key':'AIzaSyC4lzrt7WjTncucg0-r5yccKuqyYns1qjo', 'cx':'012017168918701040843:itxhwhoxuss', 'q':kor, 'searchType':'image', 'num':9}
+     params = {'key':'AIzaSyC4lzrt7WjTncucg0-r5yccKuqyYns1qjo', 'cx':'012017168918701040843:itxhwhoxuss', 'q':eng, 'searchType':'image', 'num':9}
      response = requests.get('https://www.googleapis.com/customsearch/v1', params=params)
 
      #save the image locally and update DB (image table)
