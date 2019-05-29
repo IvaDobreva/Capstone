@@ -119,6 +119,9 @@ def label():
     MARK_VOCAB = "UPDATE vocabulary SET processed = 1 WHERE kor_word = %s;"
     INSERT_IMAGE = "INSERT INTO image (imgname) VALUES (%s);"
     UPDATE_LABELS = "UPDATE image SET labels=\"%s\" WHERE imgname='%s';"
+    GET_DIC = "SELECT kor_word, eng_word FROM vocabulary;"
+    INSERT_KOR_LABEL = "INSERT INTO kor_labels(imgID, labelsKR) VALUES('%d', '%s');"
+    GET_IMG_ID = "SELECT id FROM image WHERE imgname = '%s';"
 
     eng = request.form.get('eng')
     kor = request.form.get('kor')
@@ -139,13 +142,11 @@ def label():
         #mark the word as processed
         cursor.execute(MARK_VOCAB, kor)
         conn.commit()
-        print("hi")
 
         # Instantiates a client
         client = vision.ImageAnnotatorClient()
 
         # The name of the image file to annotate
-
         file_name = os.path.join(os.path.dirname(__file__), 'public/images/', image_name)
 
         # Loads the image into memory
@@ -157,14 +158,60 @@ def label():
         response = client.label_detection(image=image)
         labels = response.label_annotations
 
+        #Get kor+eng translations from vocab
+        cursor.execute(GET_DIC)
+        dic_data = cursor.fetchall()
+
+        dict = {}
+        for word in dic_data:
+            dict[word[1]] = word[0]
+
         label_list = []
-        print('Labels:')
+        label_lst_kr = []
         for label in labels:
             label_list.append(label.description)
-            print(label.description)
-
+            try:
+                label_lst_kr.append(dict[label.description.lower()])
+            except Exception as e:
+                print(e)
         cursor.execute(UPDATE_LABELS % (','.join(label_list), image_name))
         conn.commit()
+
+        cursor.execute(GET_IMG_ID % image_name)
+        img_id = cursor.fetchall()
+        print(img_id[len(img_id)-1][0])
+        cursor.execute(INSERT_KOR_LABEL % (img_id[len(img_id)-1][0], ','.join(label_lst_kr)))
+        conn.commit()
+    return "done"
+
+@app.route('/extokor')
+def existingToKor():
+    GET_ALL_IMG = "SELECT * FROM image;"
+    GET_DIC = "SELECT kor_word, eng_word FROM vocabulary;"
+    INSERT_KOR_LABEL = "INSERT INTO kor_labels(imgID, labelsKR) VALUES('%d', '%s');"
+
+    #Get all images+labelsENG
+    cursor.execute( GET_ALL_IMG)
+    img_data = cursor.fetchall()
+
+    #Get kor+eng translations from vocab
+    cursor.execute(GET_DIC)
+    dic_data = cursor.fetchall()
+
+    dict = {}
+    for word in dic_data:
+        dict[word[1]] = word[0]
+
+    for record in img_data:
+        kor_labels = []
+        for label in record[2].split(','):
+            try:
+                kor_labels.append(dict[label.lower()])
+            except Exception as e:
+                print(e)
+        cursor.execute(INSERT_KOR_LABEL % (record[0], ','.join(kor_labels)))
+        conn.commit()
+
     return "done"
 
 if __name__ == "__main__":
