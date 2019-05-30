@@ -97,9 +97,18 @@ def label_img():
 
 @app.route('/linkimage', methods=['POST'])
 def linkimage():
+    IF_EXIST = "SELECT kor_word, eng_word FROM vocabulary WHERE kor_word='%s' AND eng_word='%s';"
+
     if request.method == 'POST':
      kor = request.form.get('kor')
      eng = request.form.get('eng')
+
+     #check if the word exists in the table
+     cursor.execute(IF_EXIST % (kor, eng))
+     result = cursor.fetchall()
+     if len(result) != 0:
+         return "existing"
+    
 
      params = {'key':'AIzaSyC4lzrt7WjTncucg0-r5yccKuqyYns1qjo', 'cx':'012017168918701040843:itxhwhoxuss', 'q':eng, 'searchType':'image', 'num':9}
      response = requests.get('https://www.googleapis.com/customsearch/v1', params=params)
@@ -108,8 +117,7 @@ def linkimage():
      image_url = []
      image = response.json()['items']#[0]['link']
      for i in image:
-         image_url.append(i['link'])
-         print(i['link'])
+         image_url.append(str(i['link']))
 
     return str(image_url)
 

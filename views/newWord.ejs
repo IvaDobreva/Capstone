@@ -159,13 +159,20 @@ button:after {
       eng = $("#eng").val();
 
       $.post("http://127.0.0.1:5001/linkimage", {'kor': kor, 'eng': eng}, function(data) {
-        data=data.replace("[", "");
-        data=data.replace("]", "");
-        data=data.split(',');
-        for(var i=0; i<data.length; i++) {
-          $("#"+i).replaceWith("<img class=\"click\" id=\""+i+"\" class=\"img-thumbnail\" class=\"img-responsive\" float=left width=200 height=200 src=" + data[i] + ">");
+        if(data == "existing") {
+          window.location = "/map";
+        } else {
+          data=data.replace("[", "");
+          data=data.replace("]", "");
+          data=data.split(',');
+
+          for(var i=0; i<data.length; i++) {
+          $("#"+i).replaceWith("<img class=\"click\" id=\""+i+"\" class=\"img-thumbnail\" class=\"img-responsive\" float=left width=200 height=200 src="+data[i]+">");
+          }
+
         }
-      })
+
+      });
     }
 
 
