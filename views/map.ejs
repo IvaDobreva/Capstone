@@ -96,6 +96,7 @@
 
     <script>
       function graph(images, targetId) {
+        $("#sigma-container ").empty();
         sigma.utils.pkg('sigma.canvas.nodes');
         // generate a  graph
         var i,
@@ -144,6 +145,7 @@
           g.nodes.push(node);
           g.edges.push(edge);
         }
+
         s = new sigma({
           graph: g,
           renderer: {
@@ -159,6 +161,7 @@
             maxEdgeSize: 5
           }
         });
+
         CustomShapes.init(s);
         // Initialize the dragNodes plugin:
         var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
@@ -175,6 +178,8 @@
           console.log(event);
         });
         s.refresh();
+
+
       }
       $('#new-word').click(function() {
         window.location.href = "word/new";
@@ -187,6 +192,7 @@
         });
         console.log($(this)[0].id);
       });
+
     </script>
 
   </body>
