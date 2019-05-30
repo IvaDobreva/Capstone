@@ -15,10 +15,12 @@ const userGame = require('../model/userGame');
 
 router.get('/', wrapper.asyncMiddleware(async(req, res) => {
   if(req.headers.cookie == undefined) {
-    res.render('game', {token: 'false'})
+    res.render('game', {token: 'false',
+                        ranking: ""})
   }
   if(cookies.parse(req.headers.cookie)['token'] == undefined) {
-    res.render('game', {token: "false"});
+    res.render('game', {token: "false",
+                        ranking: ""});
   }
 
   const ranking = await userModel.getAllUsersRanking();

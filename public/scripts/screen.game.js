@@ -62,7 +62,7 @@ bird.screens["game-screen"] = (function () {
       });
   }
 
-  GetImage();
+
 
   // 1. 'Keypress Enter' event
   $("#answer").keypress(function(key) {
@@ -71,6 +71,8 @@ bird.screens["game-screen"] = (function () {
       console.log( $('#answer').val() );
 
       answerCheck();
+      GetImage();
+      gameState.timer=10;
     }
   });
 
@@ -78,13 +80,15 @@ bird.screens["game-screen"] = (function () {
   $('#next_btn').click(function(data){
 
     answerCheck();
+    GetImage();
+    gameState.timer= 10;
   });
 
   function startGame() {
     gameState = {
       level : 0,
       score : 0,
-      timer : 2, // Gaming time of one image
+      timer : 10, // Gaming time of one image
       startTime : 0, // 현재 레벨을 시작한 시간.
       endTime : 0, // 게임이 종료될 때까지의 시간.
     };
@@ -114,7 +118,7 @@ bird.screens["game-screen"] = (function () {
       var ansFlag = false;
       GetImage();
       if(count == 10 ) {
-        console.log(curr_score);
+
         $.post('/game/score',  {score: curr_score,
                                 hisImage: cards.toString(),
                                 hisAnswer: uansw.toString(),
@@ -128,7 +132,7 @@ bird.screens["game-screen"] = (function () {
       }
 
       $('#answer').val(''); //Clear input field
-      gameState.timer = 2;
+      gameState.timer = 10;
       $("#timer").replaceWith("<h2 id=\'timer\'> Left : " + gameState.timer + "</h2>");
 
     }
@@ -139,7 +143,7 @@ bird.screens["game-screen"] = (function () {
 
     // Initialize game setting $ varible
     startGame();
-
+    GetImage();
     // Timer function call
     $("#timer").replaceWith("<h2 id=\'timer\'> Left : " + gameState.timer + "</h2>");
     setInterval(timer, 1000);
