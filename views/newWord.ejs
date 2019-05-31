@@ -159,6 +159,7 @@ button:after {
       eng = $("#eng").val();
 
       $.post("http://127.0.0.1:5001/linkimage", {'kor': kor, 'eng': eng}, function(data) {
+        console.log(data);
         if(data == "existing") {
           window.location = "/map";
         } else {
