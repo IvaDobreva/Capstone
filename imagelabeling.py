@@ -22,6 +22,7 @@ app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'password'
 app.config['MYSQL_DATABASE_DB'] = 'capstone'
+app.config['MYSQL_DATABASE_CHARSET'] = 'utf8mb4'
 mysql.init_app(app)
 
 conn = mysql.connect()
@@ -97,18 +98,25 @@ def label_img():
 
 @app.route('/linkimage', methods=['POST'])
 def linkimage():
-    IF_EXIST = "SELECT kor_word, eng_word FROM vocabulary WHERE kor_word='%s' AND eng_word='%s';"
+    IF_EXIST = "SELECT kor_word, eng_word FROM vocabulary WHERE  eng_word='%s';"
 
     if request.method == 'POST':
      kor = request.form.get('kor')
      eng = request.form.get('eng')
 
      #check if the word exists in the table
-     cursor.execute(IF_EXIST % (kor, eng))
+     query = IF_EXIST % ( eng)
+
+     cursor.execute(query)
      result = cursor.fetchall()
+
+     print(result)
      if len(result) != 0:
-         return "existing"
-    
+         for res in result:
+             print(res[0] == kor)
+             if res[0].encode('utf-8') == kor.encode('utf-8'):
+                 return "existing"
+
 
      params = {'key':'AIzaSyC4lzrt7WjTncucg0-r5yccKuqyYns1qjo', 'cx':'012017168918701040843:itxhwhoxuss', 'q':eng, 'searchType':'image', 'num':9}
      response = requests.get('https://www.googleapis.com/customsearch/v1', params=params)
